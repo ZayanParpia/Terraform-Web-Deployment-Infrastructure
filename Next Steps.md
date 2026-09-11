@@ -12,11 +12,29 @@ I am now testing to see if my ec2 instances can reach the internet
 
 
 
+
+
+September 11, 2026
+
+
+
+I got SSM working for the EC2 Instance by creating the role for it in ssm.tf
+
+
+
+I got the EC2 Instance to allow web traffic
+
+
+
 Next Steps
 
 
 
-Test to get ec2 instance to be able to accept web traffic
+Attach to s3 bucket 
+
+
+
+Create autoscaling group 
 
 
 
