@@ -13,7 +13,7 @@ resource "aws_subnet" "Terraform_Web_Subnet_A" {
   availability_zone = "us-east-1a"
 
   tags = {
-    Name = "Main"
+    Name = "Subnet A"
   }
 }
 
@@ -25,7 +25,7 @@ resource "aws_subnet" "Terraform_Web_Subnet_B" {
   availability_zone = "us-east-1b"
   
   tags = {
-    Name = "Main"
+    Name = "Subnet B"
   }
 }
 
