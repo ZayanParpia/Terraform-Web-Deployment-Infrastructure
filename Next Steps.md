@@ -32,7 +32,7 @@ Next Steps
 
 
 
-Attach to s3 bucket
+Attach to s3 bucket ✅
 
 
 
@@ -40,7 +40,14 @@ Create autoscaling group
 
 
 
-Create IAM user with PoLP (JIT) permissions
+Edit IAM Permissions for PoLP permissions
+
+
+
+When done create README and Format for
+# ============================================================
+
+
 
 
 

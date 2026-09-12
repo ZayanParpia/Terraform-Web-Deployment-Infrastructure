@@ -16,8 +16,9 @@ resource "aws_subnet" "Terraform_Web_Subnet_A" {
     Name = "Subnet A"
   }
 }
-
-#Private Subnet 2 (us-east-1b)
+# ============================================================
+# Private Subnet 2 (us-east-1b)
+# ============================================================
 
 resource "aws_subnet" "Terraform_Web_Subnet_B" {
   vpc_id     = aws_vpc.Terraform_Web_Vpc.id

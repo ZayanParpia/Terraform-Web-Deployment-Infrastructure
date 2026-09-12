@@ -9,10 +9,10 @@ resource "aws_network_interface" "example" {
 }
 
 resource "aws_instance" "test" {
-  ami           = "ami-0d7f022123f8ff19d" # us-east-1
+  ami           = "ami-0d7f022123f8ff19d"
   instance_type = "t3.micro"
-  iam_instance_profile = aws_iam_instance_profile.ssm_profile.name
 
+  iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
 
   user_data = <<-EOF
               #!/bin/bash
