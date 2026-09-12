@@ -26,17 +26,21 @@ I got the EC2 Instance to allow web traffic
 
 
 
+September 12, 2026
+
 Next Steps
 
 
 
-Attach to s3 bucket 
+Attach to s3 bucket
 
 
 
-Create autoscaling group 
+Create autoscaling group
 
 
 
 Create IAM user with PoLP (JIT) permissions
+
+
 
