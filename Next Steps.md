@@ -36,6 +36,10 @@ Attach to s3 bucket ✅
 
 
 
+September 13, 2026
+
+
+
 Create autoscaling group
 
 
@@ -44,10 +48,7 @@ Edit IAM Permissions for PoLP permissions
 
 
 
-When done create README and Format for
+When done create README and Format for that and create comments
+
 # ============================================================
-
-
-
-
 

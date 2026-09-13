@@ -7,10 +7,10 @@ resource "aws_vpc" "Terraform_Web_Vpc" {
 #Private Subnet 1 (us-east-1a)
 
 resource "aws_subnet" "Terraform_Web_Subnet_A" {
-  vpc_id     = aws_vpc.Terraform_Web_Vpc.id
-  cidr_block = "10.0.1.0/24"
+  vpc_id                  = aws_vpc.Terraform_Web_Vpc.id
+  cidr_block              = "10.0.1.0/24"
   map_public_ip_on_launch = "true"
-  availability_zone = "us-east-1a"
+  availability_zone       = "us-east-1a"
 
   tags = {
     Name = "Subnet A"
@@ -21,10 +21,10 @@ resource "aws_subnet" "Terraform_Web_Subnet_A" {
 # ============================================================
 
 resource "aws_subnet" "Terraform_Web_Subnet_B" {
-  vpc_id     = aws_vpc.Terraform_Web_Vpc.id
-  cidr_block = "10.0.2.0/24"
+  vpc_id            = aws_vpc.Terraform_Web_Vpc.id
+  cidr_block        = "10.0.2.0/24"
   availability_zone = "us-east-1b"
-  
+
   tags = {
     Name = "Subnet B"
   }

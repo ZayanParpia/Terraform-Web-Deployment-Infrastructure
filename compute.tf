@@ -1,6 +1,6 @@
 resource "aws_network_interface" "example" {
-  subnet_id   = aws_subnet.Terraform_Web_Subnet_A.id
-  private_ips = ["10.0.1.10"]
+  subnet_id       = aws_subnet.Terraform_Web_Subnet_A.id
+  private_ips     = ["10.0.1.10"]
   security_groups = [aws_security_group.Security_Rules.id]
 
   tags = {
