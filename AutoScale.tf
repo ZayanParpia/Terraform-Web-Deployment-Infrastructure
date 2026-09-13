@@ -10,7 +10,7 @@ resource "aws_launch_template" "Autoscale-LaunchTemplate" {
     name = aws_iam_instance_profile.ec2_profile.name
   }
 
-  user_data = <<-EOF
+  user_data = base64encode(<<-EOF
               #!/bin/bash
               apt-get update -y
               apt-get install -y apache2
@@ -18,6 +18,7 @@ resource "aws_launch_template" "Autoscale-LaunchTemplate" {
               systemctl enable apache2
               echo "<h1>Hello from Terraform User Data</h1>" > /var/www/html/index.html
               EOF
+  )
 }
 
 resource "aws_autoscaling_group" "asg" {

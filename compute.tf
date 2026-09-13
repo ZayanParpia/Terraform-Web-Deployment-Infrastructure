@@ -14,7 +14,7 @@ resource "aws_instance" "test" {
 
   iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
 
-  user_data = <<-EOF
+  user_data = base64encode(<<-EOF
               #!/bin/bash
               apt-get update -y
               apt-get install -y apache2
@@ -22,6 +22,7 @@ resource "aws_instance" "test" {
               systemctl enable apache2
               echo "<h1>Hello from Terraform User Data</h1>" > /var/www/html/index.html
               EOF
+  )
 
   primary_network_interface {
     network_interface_id = aws_network_interface.example.id

@@ -40,13 +40,43 @@ September 13, 2026
 
 
 
-Create autoscaling group
+Create autoscaling group ✅
 
 
+
+September 14, 2026
+
+
+
+Create ALB Infrastructure and set ips to private 
+
+
+
+Make sure s3 is secure and encrypted
+
+
+
+Test if autoscaled ec2 instances work with s3
+
+
+
+Make it usable for the public when done
+
+
+
+Outputs to dont forget that 
+
+&#x20;
 
 Edit IAM Permissions for PoLP permissions
 
 
+
+Add Monitoring 
+
+
+
+When done test if AI can make it 
 
 When done create README and Format for that and create comments
 
