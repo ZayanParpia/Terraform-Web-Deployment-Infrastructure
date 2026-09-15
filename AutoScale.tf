@@ -12,17 +12,16 @@ resource "aws_launch_template" "Autoscale-LaunchTemplate" {
 
   user_data = base64encode(<<-EOF
               #!/bin/bash
-              apt-get update -y
-              apt-get install -y apache2
-              systemctl start apache2
-              systemctl enable apache2
-              echo "<h1>Hello from Terraform User Data</h1>" > /var/www/html/index.html
+              yes | sudo apt update
+              yes | sudo apt install apache2
+              echo "<h1>Server Details</h1><p><strong>Hostname:</strong> $(hostname)</p><p><strong>IP Address:</strong> $(hostname -I | cut -d' ' -f1)</p>" > /var/www/html/index.html
+              sudo systemctl restart apache2
               EOF
   )
 }
 
 resource "aws_autoscaling_group" "asg" {
-  desired_capacity    = 2
+  desired_capacity    = 1
   max_size            = 3
   min_size            = 1
   vpc_zone_identifier = [aws_subnet.Terraform_Web_Subnet_A.id, aws_subnet.Terraform_Web_Subnet_B.id]

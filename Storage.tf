@@ -11,8 +11,8 @@ resource "aws_s3_bucket" "terraform-capstone-s3" {
 
 #ALB Logs
 
-resource "aws_s3_bucket" "terraform-capstone-s3-alb" {
-  bucket = "terraform-capstone-s3-alb"
+resource "aws_s3_bucket" "terraform-capstone-s3-alb-logs" {
+  bucket = "terraform-capstone-s3-alb-logs"
 
   tags = {
     Name        = "Terraform_Capstone_S3-ALB"

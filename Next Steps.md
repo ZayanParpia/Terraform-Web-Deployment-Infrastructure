@@ -48,13 +48,16 @@ September 14, 2026
 
 
 
-Create ALB Infrastructure and set ips to private 
+Create ALB Infrastructure and set ips to private ✅
 
 
 
 Make sure s3 is secure and encrypted
 
 
+Create WAF connection
+
+Create NAT connection for private ec2(s)
 
 Test if autoscaled ec2 instances work with s3
 
@@ -62,14 +65,13 @@ Test if autoscaled ec2 instances work with s3
 
 Make it usable for the public when done
 
-
+Rename Files and Resources for proper documentation 
 
 Outputs to dont forget that 
 
-&#x20;
+Flow Logs
 
 Edit IAM Permissions for PoLP permissions
-
 
 
 Add Monitoring 
@@ -82,3 +84,4 @@ When done create README and Format for that and create comments
 
 # ============================================================
 
+And create screenshots
