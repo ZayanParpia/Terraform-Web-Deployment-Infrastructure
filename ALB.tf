@@ -44,13 +44,6 @@ resource "aws_lb_target_group" "target_group" {
   }
 }
 
-#Target Group Attachment 
-
-resource "aws_lb_target_group_attachment" "test" {
-  target_group_arn = aws_lb_target_group.target_group.arn
-  target_id        = aws_instance.test.id
-  port             = 80
-}
 #LISTENER
 
 resource "aws_lb_listener" "http" {

@@ -50,7 +50,10 @@ September 14, 2026
 
 Create ALB Infrastructure and set ips to private ✅
 
+September 15, 2026
 
+Figure out why ALB isn't distributing traffic (Alb Target group attachment & aws_autoscaling_attachment) ✅
+Figure out why SSM is disabled now 
 
 Make sure s3 is secure and encrypted
 
