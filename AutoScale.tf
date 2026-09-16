@@ -26,6 +26,7 @@ resource "aws_autoscaling_group" "asg" {
   min_size            = 1
   vpc_zone_identifier = [aws_subnet.Terraform_Web_Subnet_A.id, aws_subnet.Terraform_Web_Subnet_B.id]
 
+  target_group_arns = [aws_lb_target_group.target_group.arn]
 
   launch_template {
     id      = aws_launch_template.Autoscale-LaunchTemplate.id
