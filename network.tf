@@ -10,7 +10,7 @@ resource "aws_subnet" "Terraform_Web_Subnet_A" {
   vpc_id            = aws_vpc.Terraform_Web_Vpc.id
   cidr_block        = "10.0.1.0/24"
   availability_zone = "us-east-1a"
-  #map_public_ip_on_launch = "true"
+  map_public_ip_on_launch = "true"
 
   tags = {
     Name = "Subnet A"
@@ -24,7 +24,7 @@ resource "aws_subnet" "Terraform_Web_Subnet_B" {
   vpc_id            = aws_vpc.Terraform_Web_Vpc.id
   cidr_block        = "10.0.2.0/24"
   availability_zone = "us-east-1b"
-  #map_public_ip_on_launch = "true"
+  map_public_ip_on_launch = "true"
 
   tags = {
     Name = "Subnet B"
@@ -104,5 +104,34 @@ resource "aws_route_table_association" "rt_assosiation_b" {
 }
 
 
+#NAT Configuration
 
+resource "aws_eip" "nat_a" {
+  domain = "vpc"
+}
 
+resource "aws_nat_gateway" "nat_a" {
+  allocation_id = aws_eip.nat_a.id
+  subnet_id     = aws_subnet.Terraform_Public_Subnet_A.id
+
+  tags = {
+    Name = "gw NAT A"
+  }
+
+  depends_on = [aws_internet_gateway.example]
+}
+
+resource "aws_eip" "nat_b" {
+  domain = "vpc"
+}
+
+resource "aws_nat_gateway" "nat_b" {
+  allocation_id = aws_eip.nat_b.id
+  subnet_id     = aws_subnet.Terraform_Public_Subnet_B.id
+
+  tags = {
+    Name = "gw NAT B"
+  }
+
+  depends_on = [aws_internet_gateway.gw]
+}

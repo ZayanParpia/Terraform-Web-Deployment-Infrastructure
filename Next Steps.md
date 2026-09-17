@@ -50,10 +50,15 @@ September 14, 2026
 
 Create ALB Infrastructure and set ips to private ✅
 
-September 15, 2026
+September 16, 2026
 
 Figure out why ALB isn't distributing traffic (Alb Target group attachment & aws_autoscaling_attachment) ✅
-Figure out why SSM is disabled now 
+Figure out why SSM is disabled now ✅
+
+
+September 17, 2026
+
+Check if Auto scale is working ✅
 
 Make sure s3 is secure and encrypted
 
@@ -64,7 +69,7 @@ Create NAT connection for private ec2(s)
 
 Test if autoscaled ec2 instances work with s3
 
-
+Remove IGW attachment to subnets
 
 Make it usable for the public when done
 
@@ -78,6 +83,8 @@ Edit IAM Permissions for PoLP permissions
 
 
 Add Monitoring 
+
+CI/CD Pipeline
 
 
 
