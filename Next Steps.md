@@ -79,6 +79,8 @@ Outputs to dont forget that
 
 Flow Logs
 
+Diagram change for NAT subnet a and b
+
 Edit IAM Permissions for PoLP permissions
 
 
