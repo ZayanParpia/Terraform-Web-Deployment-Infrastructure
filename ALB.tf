@@ -5,17 +5,17 @@ resource "aws_lb" "Terraform_ALB" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.Security_Rules.id]
-  subnets            = [aws_subnet.Terraform_Web_Subnet_A.id, aws_subnet.Terraform_Web_Subnet_B.id]
+  subnets            = [aws_subnet.ALB-Subnet.id, aws_subnet.ALB-Subnet-B.id]
 
   enable_deletion_protection = false
-  
+
 
   #Will Add this later
 
   #access_logs {
-    #bucket  = aws_s3_bucket.terraform-capstone-s3-alb-logs.id
-    #prefix  = "test-lb"
-    #enabled = true
+  #bucket  = aws_s3_bucket.terraform-capstone-s3-alb-logs.id
+  #prefix  = "test-lb"
+  #enabled = true
   #}
 
   tags = {

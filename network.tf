@@ -21,9 +21,9 @@ resource "aws_subnet" "Terraform_Web_Subnet_A" {
 # ============================================================
 
 resource "aws_subnet" "Terraform_Web_Subnet_B" {
-  vpc_id            = aws_vpc.Terraform_Web_Vpc.id
-  cidr_block        = "10.0.2.0/24"
-  availability_zone = "us-east-1b"
+  vpc_id                  = aws_vpc.Terraform_Web_Vpc.id
+  cidr_block              = "10.0.2.0/24"
+  availability_zone       = "us-east-1b"
   map_public_ip_on_launch = "true"
 
   tags = {
@@ -36,13 +36,23 @@ resource "aws_subnet" "Terraform_Web_Subnet_B" {
 # ALB Public Subnet
 # ============================================================
 resource "aws_subnet" "ALB-Subnet" {
-  vpc_id                  = aws_vpc.Terraform_Web_Vpc.id
-  cidr_block              = "10.0.3.0/24"
+  vpc_id     = aws_vpc.Terraform_Web_Vpc.id
+  cidr_block = "10.0.3.0/24"
   #map_public_ip_on_launch = "true"
-  availability_zone       = "us-east-1a"
+  availability_zone = "us-east-1a"
 
   tags = {
     Name = "Subnet A"
+  }
+}
+
+resource "aws_subnet" "ALB-Subnet-B" {
+  vpc_id            = aws_vpc.Terraform_Web_Vpc.id
+  cidr_block        = "10.0.5.0/24"
+  availability_zone = "us-east-1b"
+
+  tags = {
+    Name = "ALB subnet B"
   }
 }
 
@@ -50,9 +60,9 @@ resource "aws_subnet" "ALB-Subnet" {
 # NAT Public Subnet
 # ============================================================
 resource "aws_subnet" "NAT-Subnet" {
-  vpc_id            = aws_vpc.Terraform_Web_Vpc.id
-  cidr_block        = "10.0.4.0/24"
-  availability_zone = "us-east-1a"
+  vpc_id                  = aws_vpc.Terraform_Web_Vpc.id
+  cidr_block              = "10.0.4.0/24"
+  availability_zone       = "us-east-1a"
   map_public_ip_on_launch = "true"
 
   tags = {
@@ -69,7 +79,7 @@ resource "aws_internet_gateway" "gw" {
   }
 }
 
-#Route Table A
+#Route Table for Subnet A & B
 
 resource "aws_route_table" "RT" {
   vpc_id = aws_vpc.Terraform_Web_Vpc.id
@@ -111,7 +121,7 @@ resource "aws_route_table" "RT-NAT" {
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.gw.id
-    
+
   }
 
 
@@ -119,19 +129,53 @@ resource "aws_route_table" "RT-NAT" {
     Name = "example"
   }
 }
+
+#ALB ROUTE TABLE
+resource "aws_route_table" "ALB-RT" {
+  vpc_id = aws_vpc.Terraform_Web_Vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.gw.id
+
+  }
+
+
+  tags = {
+    Name = "ALB RT"
+  }
+}
 #Route Table Assosiation(s)
 
-#Subnet A & B
+#Subnet A
 resource "aws_route_table_association" "rt_assosiation" {
   subnet_id      = aws_subnet.Terraform_Web_Subnet_A.id
   route_table_id = aws_route_table.RT.id
 }
 
 
+#Subnet B
+resource "aws_route_table_association" "rt_assosiation_b" {
+  subnet_id      = aws_subnet.Terraform_Web_Subnet_B.id
+  route_table_id = aws_route_table.RT.id
+}
+
 #ALB subnet
 resource "aws_route_table_association" "rt_assosiation_alb" {
   subnet_id      = aws_subnet.ALB-Subnet.id
-  route_table_id = aws_route_table.RT.id
+  route_table_id = aws_route_table.ALB-RT.id
+}
+
+#NAT subnet
+resource "aws_route_table_association" "rt_assosiation_nat" {
+  subnet_id      = aws_subnet.NAT-Subnet.id
+  route_table_id = aws_route_table.ALB-RT.id
+}
+
+#Second ALB subnet
+resource "aws_route_table_association" "rt_assosiation_alb_b" {
+  subnet_id      = aws_subnet.ALB-Subnet-B.id
+  route_table_id = aws_route_table.ALB-RT.id
 }
 
 
@@ -139,6 +183,10 @@ resource "aws_route_table_association" "rt_assosiation_alb" {
 
 resource "aws_eip" "nat_a" {
   domain = "vpc"
+
+  tags = {
+    Name = "NAT-A-EIP"
+  }
 }
 
 resource "aws_nat_gateway" "nat_a" {
