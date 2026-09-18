@@ -60,10 +60,11 @@ September 17, 2026
 
 Check if Auto scale is working ✅
 
+Steps for September 18, 2026
+
+Get ALB to work with private ec2 instances ✅
+
 Make sure s3 is secure and encrypted
-
-
-Create WAF connection
 
 Create NAT connection for private ec2(s)
 
