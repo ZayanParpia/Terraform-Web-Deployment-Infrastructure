@@ -46,6 +46,9 @@ resource "aws_subnet" "ALB-Subnet" {
   }
 }
 
+# ============================================================
+# ALB Public Subnet B
+# ============================================================
 resource "aws_subnet" "ALB-Subnet-B" {
   vpc_id            = aws_vpc.Terraform_Web_Vpc.id
   cidr_block        = "10.0.5.0/24"
@@ -169,7 +172,7 @@ resource "aws_route_table_association" "rt_assosiation_alb" {
 #NAT subnet
 resource "aws_route_table_association" "rt_assosiation_nat" {
   subnet_id      = aws_subnet.NAT-Subnet.id
-  route_table_id = aws_route_table.ALB-RT.id
+  route_table_id = aws_route_table.RT-NAT.id
 }
 
 #Second ALB subnet

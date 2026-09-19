@@ -64,30 +64,40 @@ Steps for September 18, 2026
 
 Get ALB to work with private ec2 instances ✅
 
-Make sure s3 is secure and encrypted
+Create NAT connection for private ec2(s) ✅
 
-Create NAT connection for private ec2(s)
+Test if autoscaled ec2 instances work with s3 ✅
 
-Test if autoscaled ec2 instances work with s3
+Remove IGW attachment to subnets ✅
 
-Remove IGW attachment to subnets
+2026-09-19
+Make sure s3 is secure and encrypted ✅
 
-Make it usable for the public when done
+
+Steps for Sep 20, 2026
+Configure KMS so that the s3 bucket is encrypted properly.
+
+*Make it usable for the public when done
 
 Rename Files and Resources for proper documentation 
 
 Outputs to dont forget that 
 
+Mount s3 beforehand 
 Flow Logs
 
-Diagram change for NAT subnet a and b
+When done project organize folders and all for learning and build and all and package in docker
 
+add default_cooldown to autoscale and check if it works
 Edit IAM Permissions for PoLP permissions
 
+Change Diagram for Private ec2 instances and NAT
 
 Add Monitoring 
 
 CI/CD Pipeline
+
+Typos
 
 
 
@@ -95,6 +105,10 @@ When done test if AI can make it
 
 When done create README and Format for that and create comments
 
+Post on linkedin
+Post on GitHub
+
+Simulate some things (list them and do them 25 minutes a day)
 # ============================================================
 
 And create screenshots
