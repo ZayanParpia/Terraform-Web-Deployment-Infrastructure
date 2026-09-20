@@ -64,18 +64,18 @@ Steps for September 18, 2026
 
 Get ALB to work with private ec2 instances ✅
 
-Make sure s3 is secure and encrypted
+Create NAT connection for private ec2(s) ✅
 
-Create NAT connection for private ec2(s)
+Test if autoscaled ec2 instances work with s3 ✅
 
-Test if autoscaled ec2 instances work with s3
+Remove IGW attachment to subnets ✅
 
-Remove IGW attachment to subnets
+2026-09-19
+Make sure s3 is secure and encrypted ✅
 
-<<<<<<< HEAD
 
-Steps for Sep 20, 2026
-Configure KMS so that the s3 bucket is encrypted properly. ✅
+Steps for Sep 21, 2026
+Configure KMS so that the s3 bucket is encrypted properly. 
 
 Change s3 type
 
@@ -84,47 +84,40 @@ Organize what to do post project
 Flow Logs
 
 *Make it usable for the public when done
-=======
-Make it usable for the public when done
->>>>>>> parent of 40bab2c (Configured KMS and will get back to it next session)
 
 Rename Files and Resources for proper documentation 
 
 Outputs to dont forget that 
 
-<<<<<<< HEAD
 Mount s3 beforehand 
 
 Add WAF 
-=======
-Flow Logs
->>>>>>> parent of 40bab2c (Configured KMS and will get back to it next session)
 
-Diagram change for NAT subnet a and b
+When done project organize folders and all for learning and build and all and package in docker
 
+add default_cooldown to autoscale and check if it works
 Edit IAM Permissions for PoLP permissions
 
-<<<<<<< HEAD
 fix diagram for typos and Change Diagram for Private ec2 instances and NAT
-=======
->>>>>>> parent of 40bab2c (Configured KMS and will get back to it next session)
 
 Add Monitoring 
 
 CI/CD Pipeline
 
-<<<<<<< HEAD
 Typos
 
 Package to docker to 
-=======
->>>>>>> parent of 40bab2c (Configured KMS and will get back to it next session)
 
+organize files and folders
 
 When done test if AI can make it 
 
 When done create README and Format for that and create comments
 
+Post on linkedin
+Post on GitHub
+
+Simulate some things (list them and do them 25 minutes a day)
 # ============================================================
 
 And create screenshots

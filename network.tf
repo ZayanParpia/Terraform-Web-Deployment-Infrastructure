@@ -24,7 +24,7 @@ resource "aws_subnet" "Terraform_Web_Subnet_B" {
   vpc_id                  = aws_vpc.Terraform_Web_Vpc.id
   cidr_block              = "10.0.2.0/24"
   availability_zone       = "us-east-1b"
-  map_public_ip_on_launch = "true"
+  #map_public_ip_on_launch = "true"
 
   tags = {
     Name = "Subnet B"
@@ -38,17 +38,21 @@ resource "aws_subnet" "Terraform_Web_Subnet_B" {
 resource "aws_subnet" "ALB-Subnet" {
   vpc_id     = aws_vpc.Terraform_Web_Vpc.id
   cidr_block = "10.0.3.0/24"
-  #map_public_ip_on_launch = "true"
+  map_public_ip_on_launch = "true"
   availability_zone = "us-east-1a"
 
   tags = {
-    Name = "Subnet A"
+    Name = "ALB SUBNET"
   }
 }
 
+# ============================================================
+# ALB Public Subnet B
+# ============================================================
 resource "aws_subnet" "ALB-Subnet-B" {
   vpc_id            = aws_vpc.Terraform_Web_Vpc.id
   cidr_block        = "10.0.5.0/24"
+  map_public_ip_on_launch = "true"
   availability_zone = "us-east-1b"
 
   tags = {
@@ -169,7 +173,7 @@ resource "aws_route_table_association" "rt_assosiation_alb" {
 #NAT subnet
 resource "aws_route_table_association" "rt_assosiation_nat" {
   subnet_id      = aws_subnet.NAT-Subnet.id
-  route_table_id = aws_route_table.ALB-RT.id
+  route_table_id = aws_route_table.RT-NAT.id
 }
 
 #Second ALB subnet

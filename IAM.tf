@@ -76,25 +76,25 @@ resource "aws_iam_instance_profile" "ec2_profile" {
 # ============================================================
 
 
-data "aws_iam_policy_document" "alb_logs" {
-  statement {
-    sid    = "AllowALBLogDelivery"
-    effect = "Allow"
+# data "aws_iam_policy_document" "alb_logs" {
+#   statement {
+#     sid    = "AllowALBLogDelivery"
+#     effect = "Allow"
 
-    principals {
-      type        = "Service"
-      identifiers = ["logdelivery.elasticloadbalancing.amazonaws.com"]
-    }
+#     principals {
+#       type        = "Service"
+#       identifiers = ["logdelivery.elasticloadbalancing.amazonaws.com"]
+#     }
 
-    actions   = ["s3:PutObject"]
-    resources = ["${aws_s3_bucket.terraform-capstone-s3-alb-logs.arn}/alb/AWSLogs/${data.aws_caller_identity.current.account_id}/*"]
+#     actions   = ["s3:PutObject"]
+#     resources = ["${aws_s3_bucket.terraform-capstone-s3-alb-logs.arn}/alb/AWSLogs/${data.aws_caller_identity.current.account_id}/*"]
 
-    condition {
-      test     = "StringEquals"
-      variable = "s3:x-amz-acl"
-      values   = ["bucket-owner-full-control"]
-    }
-  }
-}
+#     condition {
+#       test     = "StringEquals"
+#       variable = "s3:x-amz-acl"
+#       values   = ["bucket-owner-full-control"]
+#     }
+#   }
+# }
 
 data "aws_caller_identity" "current" {}
