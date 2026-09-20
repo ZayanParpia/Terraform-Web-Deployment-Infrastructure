@@ -75,7 +75,10 @@ Make sure s3 is secure and encrypted ✅
 
 
 Steps for Sep 20, 2026
-Configure KMS so that the s3 bucket is encrypted properly.
+Configure KMS so that the s3 bucket is encrypted properly. ✅
+s3 type
+
+Organize what to do post project
 
 *Make it usable for the public when done
 
@@ -91,7 +94,7 @@ When done project organize folders and all for learning and build and all and pa
 add default_cooldown to autoscale and check if it works
 Edit IAM Permissions for PoLP permissions
 
-Change Diagram for Private ec2 instances and NAT
+fix diagram for typos and Change Diagram for Private ec2 instances and NAT
 
 Add Monitoring 
 
@@ -99,6 +102,7 @@ CI/CD Pipeline
 
 Typos
 
+Package to docker to 
 
 
 When done test if AI can make it 
