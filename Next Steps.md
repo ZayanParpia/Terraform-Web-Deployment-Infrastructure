@@ -76,9 +76,12 @@ Make sure s3 is secure and encrypted ✅
 
 Steps for Sep 20, 2026
 Configure KMS so that the s3 bucket is encrypted properly. ✅
-s3 type
+
+Change s3 type
 
 Organize what to do post project
+
+Flow Logs
 
 *Make it usable for the public when done
 
@@ -87,7 +90,8 @@ Rename Files and Resources for proper documentation
 Outputs to dont forget that 
 
 Mount s3 beforehand 
-Flow Logs
+
+Add WAF 
 
 When done project organize folders and all for learning and build and all and package in docker
 
