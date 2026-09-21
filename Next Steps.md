@@ -75,23 +75,26 @@ Make sure s3 is secure and encrypted ✅
 
 
 Steps for Sep 21, 2026
+Get ALB to work with ec2 instances again 
+
 Configure KMS so that the s3 bucket is encrypted properly. 
 
 Change s3 type
 
+Add Flow Logs
+
+Add WAF
+
 Organize what to do post project
 
-Flow Logs
+Mount s3 beforehand 
+
 
 *Make it usable for the public when done
 
 Rename Files and Resources for proper documentation 
 
 Outputs to dont forget that 
-
-Mount s3 beforehand 
-
-Add WAF 
 
 When done project organize folders and all for learning and build and all and package in docker
 

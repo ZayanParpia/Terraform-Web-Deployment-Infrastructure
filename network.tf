@@ -100,24 +100,6 @@ resource "aws_route_table" "RT" {
   }
 }
 
-#Route Table B
-#NO LONGER NEEDED?
-
-# resource "aws_route_table" "RTb" {
-#   vpc_id = aws_vpc.Terraform_Web_Vpc.id
-
-#   route {
-#     cidr_block = "0.0.0.0/0"
-#     #gateway_id = aws_internet_gateway.gw.id
-#     nat_gateway_id = aws_nat_gateway.nat_a.id
-#   }
-
-
-#   tags = {
-#     Name = "example"
-#   }
-# }
-
 #Route Table for NAT
 resource "aws_route_table" "RT-NAT" {
   vpc_id = aws_vpc.Terraform_Web_Vpc.id
@@ -170,17 +152,18 @@ resource "aws_route_table_association" "rt_assosiation_alb" {
   route_table_id = aws_route_table.ALB-RT.id
 }
 
+#Second ALB subnet
+resource "aws_route_table_association" "rt_assosiation_alb_b" {
+  subnet_id      = aws_subnet.ALB-Subnet-B.id
+  route_table_id = aws_route_table.ALB-RT.id
+}
+
 #NAT subnet
 resource "aws_route_table_association" "rt_assosiation_nat" {
   subnet_id      = aws_subnet.NAT-Subnet.id
   route_table_id = aws_route_table.RT-NAT.id
 }
 
-#Second ALB subnet
-resource "aws_route_table_association" "rt_assosiation_alb_b" {
-  subnet_id      = aws_subnet.ALB-Subnet-B.id
-  route_table_id = aws_route_table.ALB-RT.id
-}
 
 
 #NAT Configuration
@@ -204,21 +187,8 @@ resource "aws_nat_gateway" "nat_a" {
   depends_on = [aws_internet_gateway.gw]
 }
 
-resource "aws_eip" "nat_b" {
-  domain = "vpc"
-
-  tags = {
-    Name = "NAT-B-EIP"
-  }
-}
-
-resource "aws_nat_gateway" "nat_b" {
-  allocation_id = aws_eip.nat_b.id
-  subnet_id     = aws_subnet.NAT-Subnet.id
-
-  tags = {
-    Name = "gw NAT B"
-  }
-
-  depends_on = [aws_internet_gateway.gw]
+#Wait for NAT
+resource "time_sleep" "wait_for_nat" {
+  depends_on      = [aws_nat_gateway.nat_a, aws_route_table.RT]
+  create_duration = "60s"
 }
