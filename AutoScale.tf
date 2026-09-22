@@ -25,7 +25,7 @@ resource "aws_autoscaling_group" "asg" {
   max_size            = 3
   min_size            = 1
   vpc_zone_identifier = [aws_subnet.Terraform_Web_Subnet_A.id, aws_subnet.Terraform_Web_Subnet_B.id]
-  depends_on = [time_sleep.wait_for_nat]
+  depends_on          = [time_sleep.wait_for_nat]
 
   target_group_arns = [aws_lb_target_group.target_group.arn]
 

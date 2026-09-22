@@ -22,8 +22,8 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "s3_bucket_encrypt
       kms_master_key_id = aws_kms_key.terraform_capstone_s3_key.arn
       sse_algorithm     = "aws:kms"
     }
-    
+
     # Reduces KMS costs and API traffic significantly
-    bucket_key_enabled = true 
+    bucket_key_enabled = true
   }
 }

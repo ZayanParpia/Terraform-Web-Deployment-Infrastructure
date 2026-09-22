@@ -98,3 +98,52 @@ resource "aws_iam_instance_profile" "ec2_profile" {
 # }
 
 data "aws_caller_identity" "current" {}
+
+# ============================================================
+# Flow Log IAM role and policy
+# ============================================================
+resource "aws_cloudwatch_log_group" "terraform_capstone_flow_log_group" {
+  name              = "terraform-capstone-flow-logs"
+  retention_in_days = 14
+}
+
+data "aws_iam_policy_document" "assume_role" {
+  statement {
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["vpc-flow-logs.amazonaws.com"]
+    }
+
+    actions = ["sts:AssumeRole"]
+  }
+}
+
+resource "aws_iam_role" "terraform_capstone_flow_log_role" {
+  name               = "terraform-capstone-flow-log-role"
+  assume_role_policy = data.aws_iam_policy_document.assume_role.json
+}
+
+data "aws_iam_policy_document" "terraform_capstone_flow_log_policy" {
+  statement {
+    effect = "Allow"
+
+    actions = [
+      "logs:CreateLogGroup",
+      "logs:CreateLogStream",
+      "logs:PutLogEvents",
+      "logs:DescribeLogGroups",
+      "logs:DescribeLogStreams",
+    ]
+
+    resources = ["${aws_cloudwatch_log_group.terraform_capstone_flow_log_group.arn}:*"]
+  }
+}
+
+resource "aws_iam_role_policy" "terraform_capstone_flow_log_policy" {
+  name   = "terraform-capstone-flow-log-policy"
+  role   = aws_iam_role.terraform_capstone_flow_log_role.id
+  policy = data.aws_iam_policy_document.terraform_capstone_flow_log_policy.json
+}
+
