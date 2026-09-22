@@ -35,9 +35,7 @@ resource "aws_s3_bucket" "terraform-capstone-s3-alb-logs" {
 #   rule {
 #     apply_server_side_encryption_by_default {
 #       kms_master_key_id = aws_kms_key.terraform-capstone-s3-kms.arn
-#       sse_algorithm     = "aws:kms"
+#       sse_algorithm = "AES256"
 #     }
-
-    
 #   }
 # }
