@@ -25,7 +25,7 @@ resource "aws_lb" "Terraform_ALB" {
 
 #TARGET GROUP
 resource "aws_lb_target_group" "target_group" {
-  name        = "tf-example-lb-tg"
+  name        = "terraform-capstone-tg"
   port        = 80
   protocol    = "HTTP"
   target_type = "instance"

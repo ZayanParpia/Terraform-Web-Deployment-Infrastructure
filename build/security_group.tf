@@ -1,3 +1,8 @@
+# ============================================================
+# Security Group
+# ============================================================
+
+
 resource "aws_security_group" "Security_Rules" {
   name        = "Security Rules Terraform Capstone"
   description = "Security Rules"
@@ -7,6 +12,10 @@ resource "aws_security_group" "Security_Rules" {
     Name = "Security Rules"
   }
 }
+
+# ============================================================
+# Allow port 80 and 443 for ALB
+# ============================================================
 
 resource "aws_vpc_security_group_ingress_rule" "allow_http_ipv4" {
   security_group_id = aws_security_group.Security_Rules.id

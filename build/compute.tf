@@ -1,4 +1,4 @@
-resource "aws_network_interface" "example" {
+resource "aws_network_interface" "terraform_capstone_network_interface" {
   subnet_id       = aws_subnet.Terraform_Web_Subnet_A.id
   private_ips     = ["10.0.1.10"]
   security_groups = [aws_security_group.Security_Rules.id]
