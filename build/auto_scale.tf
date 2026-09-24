@@ -12,8 +12,13 @@ resource "aws_launch_template" "Autoscale-LaunchTemplate" {
 
   user_data = base64encode(<<-EOF
               #!/bin/bash
+              yes | sudo wget https://s3.amazonaws.com/mountpoint-s3-release/latest/x86_64/mount-s3.deb
               yes | sudo apt update
               yes | sudo apt install apache2
+              yes | sudo apt-get install -y ./mount-s3.deb
+              sudo mkdir -p /mnt/s3
+              sudo chown $(whoami):$(whoami) /mnt/s3
+              mount-s3 terraform-capstone-s3 /mnt/s3
               echo "<h1>Server Details</h1><p><strong>Hostname:</strong> $(hostname)</p><p><strong>IP Address:</strong> $(hostname -I | cut -d' ' -f1)</p>" > /var/www/html/index.html
               sudo systemctl restart apache2
               EOF

@@ -43,20 +43,33 @@ resource "aws_iam_role_policy" "s3_access" {
   policy = jsonencode({
     Version = "2012-10-17"
 
-    Statement = [{
-      Effect = "Allow"
-
-      Action = [
-        "s3:GetObject",
-        "s3:PutObject",
-        "s3:ListBucket"
-      ]
-
-      Resource = [
-        aws_s3_bucket.terraform-capstone-s3.arn,
-        "${aws_s3_bucket.terraform-capstone-s3.arn}/*"
-      ]
-    }]
+    Statement = [
+      {
+        Sid      = "ListBucket"
+        Effect   = "Allow"
+        Action   = ["s3:ListBucket"]
+        Resource = aws_s3_bucket.terraform-capstone-s3.arn
+      },
+      {
+        Sid    = "ReadWriteObjects"
+        Effect = "Allow"
+        Action = [
+          "s3:GetObject",
+          "s3:PutObject",
+          "s3:AbortMultipartUpload"
+        ]
+        Resource = "${aws_s3_bucket.terraform-capstone-s3.arn}/*"
+      },
+      {
+        Sid    = "KmsForBucketEncryption"
+        Effect = "Allow"
+        Action = [
+          "kms:GenerateDataKey",
+          "kms:Decrypt"
+        ]
+        Resource = aws_kms_key.terraform_capstone_s3_key.arn
+      }
+    ]
   })
 }
 
