@@ -52,8 +52,9 @@ Create ALB Infrastructure and set ips to private ✅
 
 September 16, 2026
 
-Figure out why ALB isn't distributing traffic (Alb Target group attachment & aws_autoscaling_attachment) ✅
+Figure out why ALB isn't distributing traffic (Alb Target group attachment \& aws\_autoscaling\_attachment) ✅
 Figure out why SSM is disabled now ✅
+
 
 
 September 17, 2026
@@ -74,53 +75,67 @@ Remove IGW attachment to subnets ✅
 Make sure s3 is secure and encrypted ✅
 
 
+
 Steps for Sep 21, 2026
-Get ALB to work with ec2 instances again 
+Get ALB to work with ec2 instances again ✅
 
-Configure KMS so that the s3 bucket is encrypted properly. 
+Configure KMS so that the s3 bucket is encrypted properly. ✅
 
-Change s3 type
+Change s3 type ✅
 
-Add Flow Logs
+Add Flow Logs ✅
 
-Add WAF
+Add WAF ✅
 
 Organize what to do post project
 
-Mount s3 beforehand 
+Mount s3 beforehand ✅
 
 
-*Make it usable for the public when done
 
-Rename Files and Resources for proper documentation 
+\*Make it usable for the public when done
 
-Outputs to dont forget that 
 
-When done project organize folders and all for learning and build and all and package in docker
 
-add default_cooldown to autoscale and check if it works
+Rename Files and Resources for proper documentation  ✅
+
+Outputs to dont forget that  ✅
+
+Names for ec2 instances  ✅
+
+
+fix diagram for typos and Change Diagram for Private ec2 instances and NAT ✅
+
+
+
 Edit IAM Permissions for PoLP permissions
 
-fix diagram for typos and Change Diagram for Private ec2 instances and NAT
 
-Add Monitoring 
+
+List things to simulate with the WAF
+
+
 
 CI/CD Pipeline
 
-Typos
 
-Package to docker to 
 
-organize files and folders
+Collect Screenshots/Video demo
 
-When done test if AI can make it 
+
 
 When done create README and Format for that and create comments
+
+
 
 Post on linkedin
 Post on GitHub
 
-Simulate some things (list them and do them 25 minutes a day)
+
+
+When done test if AI can make it
+
 # ============================================================
 
 And create screenshots
+
