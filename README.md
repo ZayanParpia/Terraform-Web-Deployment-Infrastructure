@@ -4,8 +4,6 @@
 
 ![Architecture Diagram](Diagram/Diagram.png)
 
-## ⚡ 30-Second Overview
-
 I designed and deployed a **secure, highly available web application environment on AWS** using **Terraform** rather than manually building the infrastructure in the AWS Console.
 
 The key idea is simple:
