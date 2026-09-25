@@ -1,4 +1,4 @@
-\# ☁️ Secure AWS Web Infrastructure — Terraform, WAF \& DevSecOps
+# ☁️ Secure AWS Web Infrastructure — Terraform, WAF & DevSecOps
 
 
 
