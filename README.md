@@ -52,41 +52,46 @@ This project combines **cloud engineering + cloud security + Infrastructure-as-C
 
 # 🧠 Architecture at a Glance
 
-\`\`\`text
-                         INTERNET
-                            │
-                            ▼
-                     ┌─────────────┐
-                     │  AWS WAF    │
-                     │ Auto Protect│
-                     └──────┬──────┘
-                            │
-                         HTTP/HTTPS
-                            │
-                            ▼
-                  ┌─────────────────────┐
-                  │        ALB          │
-                  │ Application LB      │
-                  └─────────┬───────────┘
-                            │
-                ┌───────────┴───────────┐
-                ▼                       ▼
-        ┌───────────────┐       ┌───────────────┐
-        │ Private AZ 1  │       │ Private AZ 2  │
-        │               │       │               │
-        │  EC2 Web      │       │  EC2 Web      │
-        │  Server       │       │  Server       │
-        └───────┬───────┘       └───────┬───────┘
-                │                       │
-                └───────────┬───────────┘
-                            │
-                            ▼
-                     ┌─────────────┐
-                     │ NAT Gateway │
-                     └──────┬──────┘
-                            │
-                            ▼
-                        INTERNET
+INTERNET
+   │
+   ▼
+AWS WAF (auto-protect)
+   │
+   ▼
+ALB (Application Load Balancer)
+   │
+   ├──────────────┐
+   ▼              ▼
+EC2 (AZ 1)     EC2 (AZ 2)
+   │              │
+   └──────┬───────┘
+          ▼
+      NAT Gateway
+          │
+          ▼
+      INTERNET
+
+
+Monitoring / Logging
+  EC2/VPC → VPC Flow Logs → S3
+  EC2/AWS → CloudWatch → Monitoring
+
+Administration
+  Admin → SSM Session Manager → Private EC2
+
+Encryption
+  S3 / stored data → AWS KMS
+
+
+Monitoring / Logging
+  EC2/VPC → VPC Flow Logs → S3
+  EC2/AWS → CloudWatch → Monitoring
+
+Administration
+  Admin → SSM Session Manager → Private EC2
+
+Encryption
+  S3 / stored data → AWS KMS
 
       Monitoring / Logging
       ─────────────────────────────────────────
