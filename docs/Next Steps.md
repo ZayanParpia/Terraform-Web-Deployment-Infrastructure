@@ -129,6 +129,10 @@ Edit IAM Permissions for PoLP permissions
 
 
 
+Add Docker and CI to Diagram
+
+
+
 Flow Logs bucket 
 
 

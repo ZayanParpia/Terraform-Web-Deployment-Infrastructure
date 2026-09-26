@@ -52,6 +52,7 @@ This project combines **cloud engineering + cloud security + Infrastructure-as-C
 
 # 🧠 Architecture at a Glance
 
+```text
 INTERNET
    │
    ▼
@@ -70,8 +71,9 @@ EC2 (AZ 1)     EC2 (AZ 2)
           │
           ▼
       INTERNET
+```
 
-
+```text
 Monitoring / Logging
   EC2/VPC → VPC Flow Logs → S3
   EC2/AWS → CloudWatch → Monitoring
@@ -81,31 +83,7 @@ Administration
 
 Encryption
   S3 / stored data → AWS KMS
-
-
-Monitoring / Logging
-  EC2/VPC → VPC Flow Logs → S3
-  EC2/AWS → CloudWatch → Monitoring
-
-Administration
-  Admin → SSM Session Manager → Private EC2
-
-Encryption
-  S3 / stored data → AWS KMS
-
-      Monitoring / Logging
-      ─────────────────────────────────────────
-      EC2 / VPC → VPC Flow Logs → S3
-      EC2 / AWS → CloudWatch → Monitoring
-
-      Administration
-      ─────────────────────────────────────────
-      Admin → SSM Session Manager → Private EC2
-
-      Encryption
-      ─────────────────────────────────────────
-      S3 / stored data → AWS KMS
-\`\`\`
+```
 
 ### Security boundary
 
@@ -113,11 +91,11 @@ The important design decision is that **the web servers are private**.
 
 Users do not connect directly to EC2.
 
-\`\`\`text
+```text
 ❌ Internet → EC2
 
 ✅ Internet → WAF → ALB → Private EC2
-\`\`\`
+```
 
 The ALB is the controlled public entry point, while the EC2 layer stays inside private subnets.
 
@@ -151,7 +129,7 @@ This limits their exposure and gives the environment redundancy.
 
 Instead of opening port 22 for administration, the project uses **AWS Systems Manager Session Manager**.
 
-\`\`\`text
+```text
 Administrator
       │
       ▼
@@ -159,7 +137,7 @@ SSM Session Manager
       │
       ▼
 Private EC2
-\`\`\`
+```
 
 ### 4. Least Privilege IAM
 
@@ -183,7 +161,7 @@ Data at rest is protected using **AWS KMS**.
 
 ### Inbound traffic
 
-\`\`\`text
+```text
 Internet
    │
    ▼
@@ -194,13 +172,13 @@ Internet
    │
    ▼
 Private EC2
-\`\`\`
+```
 
 Only the required web traffic is exposed to the application path.
 
 ### Outbound traffic from EC2
 
-\`\`\`text
+```text
 Private EC2
     │
     ▼
@@ -211,7 +189,7 @@ Internet Gateway
     │
     ▼
 Internet
-\`\`\`
+```
 
 This lets private instances reach external resources without turning them into public-facing servers.
 
@@ -225,7 +203,7 @@ Auto Scaling is used to adjust EC2 capacity based on workload.
 
 I also created **mock CPU usage testing** to demonstrate how increased resource utilization can be used to trigger scaling behavior.
 
-\`\`\`text
+```text
 Normal workload
       │
       ▼
@@ -235,7 +213,7 @@ Higher workload
       │
       ▼
 EC2 ─── EC2 ─── EC2 ─── EC2
-\`\`\`
+```
 
 This gave me hands-on experience with:
 
@@ -266,7 +244,7 @@ Used as a durable destination for stored logs/data.
 
 The overall flow is:
 
-\`\`\`text
+```text
 AWS Resources
      │
      ├── VPC Flow Logs
@@ -275,7 +253,7 @@ AWS Resources
              │
              ▼
             S3
-\`\`\`
+```
 
 ---
 
@@ -287,19 +265,19 @@ Instead of clicking through the AWS Console, infrastructure is described as code
 
 Core workflow:
 
-\`\`\`bash
+```bash
 terraform init
 terraform fmt
 terraform validate
 terraform plan
 terraform apply
-\`\`\`
+```
 
 Cleanup:
 
-\`\`\`bash
+```bash
 terraform destroy
-\`\`\`
+```
 
 This project taught me how to think about cloud infrastructure as a **reproducible system** rather than a collection of manually configured resources.
 
@@ -311,7 +289,7 @@ The project also includes a **CI/CD pipeline** for automating infrastructure che
 
 Conceptually:
 
-\`\`\`text
+```text
 GitHub
    │
    ▼
@@ -324,7 +302,7 @@ CI/CD
            │
            ▼
           AWS
-\`\`\`
+```
 
 This connects the infrastructure work to a real development workflow instead of treating Terraform as a one-time script.
 
@@ -336,7 +314,7 @@ The application is also packaged using **Docker**.
 
 The purpose is to keep the application runtime consistent and make deployment easier to reproduce.
 
-\`\`\`text
+```text
 Docker
    │
    ▼
@@ -344,7 +322,7 @@ Application
    │
    ▼
 EC2
-\`\`\`
+```
 
 ---
 
@@ -354,7 +332,7 @@ After the core infrastructure is complete, I will use controlled security testin
 
 Planned flow:
 
-\`\`\`text
+```text
 Controlled Attack Request
           │
           ▼
@@ -370,7 +348,7 @@ Controlled Attack Request
        │   Private EC2
        │
        └──► Logs / Monitoring
-\`\`\`
+```
 
 The goal is to demonstrate the complete security lifecycle:
 
@@ -476,7 +454,7 @@ This project demonstrates that I can move beyond learning individual AWS command
 
 The main engineering decisions were:
 
-\`\`\`text
+```text
 Requirement
     ↓
 Private Web Servers
@@ -496,7 +474,7 @@ KMS + Private S3
 Flow Logs + CloudWatch
     ↓
 CI/CD + Terraform
-\`\`\`
+```
 
 The important part was learning **why each component exists and how the components interact**.
 
@@ -526,50 +504,9 @@ The project is documented through:
 
 ---
 
-# 📁 Repository Structure
-
-\`\`\`text
-.
-├── README.md
-├── Dockerfile
-├── .dockerignore
-├── .gitignore
-│
-├── Diagram/
-│   └── Diagram.png
-│
-├── build/
-│   ├── main.tf
-│   ├── provider.tf
-│   ├── variables.tf
-│   ├── locals.tf
-│   ├── outputs.tf
-│   └── modules/
-│
-├── app/
-│   └── ...
-│
-├── scripts/
-│   └── ...
-│
-├── docs/
-│   ├── deployment.md
-│   ├── security.md
-│   └── screenshots/
-│
-├── tests/
-│   └── ...
-│
-└── .github/
-    └── workflows/
-        └── terraform.yml
-\`\`\`
-
----
-
 # 🚀 Project Workflow
 
-\`\`\`text
+```text
 1. Design the AWS architecture
             ↓
 2. Build infrastructure with Terraform
@@ -597,7 +534,7 @@ The project is documented through:
 13. Validate WAF with controlled attack simulations
             ↓
 14. Document everything with screenshots + video
-\`\`\`
+```
 
 ---
 
