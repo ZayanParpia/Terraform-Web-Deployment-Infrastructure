@@ -104,7 +104,24 @@ Outputs to dont forget that  ✅
 Names for ec2 instances  ✅
 
 
+
 fix diagram for typos and Change Diagram for Private ec2 instances and NAT ✅
+
+
+
+See if you can get https traffic ✅
+
+
+
+Refine README.md for duplicates and why you cant get https✅
+
+
+
+Block Public Access s3  ✅
+
+
+
+Docker and ci/cd pipeline
 
 
 
@@ -112,11 +129,15 @@ Edit IAM Permissions for PoLP permissions
 
 
 
-Edit README for screenshot explanations and explain what each tf file does
+Flow Logs bucket 
 
 
 
-List things to simulate with the WAF
+Edit README for screenshot explanations and explain what each tf file does and fix the architecture at a glance
+
+
+
+List things to simulate with the WAF and perhaps az down
 
 
 
