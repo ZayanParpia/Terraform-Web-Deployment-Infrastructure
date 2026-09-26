@@ -121,6 +121,10 @@ Block Public Access s3  ✅
 
 
 
+Write Flow and ALB logs to S3 Bucket
+
+
+
 Docker and ci/cd pipeline
 
 
@@ -129,7 +133,9 @@ Edit IAM Permissions for PoLP permissions
 
 
 
-Add Docker and CI to Diagram
+Add Docker and CI to Diagram ✅
+
+
 
 
 
