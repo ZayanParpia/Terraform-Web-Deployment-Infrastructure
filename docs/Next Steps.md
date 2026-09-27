@@ -121,7 +121,7 @@ Block Public Access s3  ✅
 
 
 
-Write Flow and ALB logs to S3 Bucket
+Write Flow and ALB logs to S3 Bucket ✅
 
 
 
@@ -139,7 +139,7 @@ Add Docker and CI to Diagram ✅
 
 
 
-Flow Logs bucket 
+Flow Logs bucket
 
 
 

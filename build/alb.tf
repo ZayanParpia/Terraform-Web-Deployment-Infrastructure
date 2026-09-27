@@ -10,13 +10,14 @@ resource "aws_lb" "Terraform_ALB" {
   enable_deletion_protection = false
 
 
-  #Will Add this later
 
-  #access_logs {
-  #bucket  = aws_s3_bucket.terraform-capstone-s3-alb-logs.id
-  #prefix  = "test-lb"
-  #enabled = true
-  #}
+  access_logs {
+    bucket  = aws_s3_bucket.terraform-capstone-s3-logs.id
+    prefix  = "test-lb"
+    enabled = true
+  }
+
+  depends_on = [aws_s3_bucket_policy.logs_bucket]
 
   tags = {
     Environment = "Development"

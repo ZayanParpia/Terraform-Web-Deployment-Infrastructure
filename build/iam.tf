@@ -84,42 +84,72 @@ resource "aws_iam_instance_profile" "ec2_profile" {
 }
 
 
-# ============================================================
-# ALB LOGS
-# ============================================================
-
-
-# data "aws_iam_policy_document" "alb_logs" {
-#   statement {
-#     sid    = "AllowALBLogDelivery"
-#     effect = "Allow"
-
-#     principals {
-#       type        = "Service"
-#       identifiers = ["logdelivery.elasticloadbalancing.amazonaws.com"]
-#     }
-
-#     actions   = ["s3:PutObject"]
-#     resources = ["${aws_s3_bucket.terraform-capstone-s3-alb-logs.arn}/alb/AWSLogs/${data.aws_caller_identity.current.account_id}/*"]
-
-#     condition {
-#       test     = "StringEquals"
-#       variable = "s3:x-amz-acl"
-#       values   = ["bucket-owner-full-control"]
-#     }
-#   }
-# }
-
 data "aws_caller_identity" "current" {}
 
+data "aws_iam_policy_document" "logs_bucket" {
+  statement {
+    sid    = "AllowALBLogDelivery"
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["logdelivery.elasticloadbalancing.amazonaws.com"]
+    }
+
+    actions = ["s3:PutObject"]
+    resources = [
+      "${aws_s3_bucket.terraform-capstone-s3-logs.arn}/test-lb/AWSLogs/${data.aws_caller_identity.current.account_id}/*"
+    ]
+  }
+
+  statement {
+    sid    = "AllowFlowLogsAclCheck"
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["delivery.logs.amazonaws.com"]
+    }
+
+    actions   = ["s3:GetBucketAcl"]
+    resources = [aws_s3_bucket.terraform-capstone-s3-logs.arn]
+  }
+
+  statement {
+    sid    = "AllowFlowLogsDelivery"
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["delivery.logs.amazonaws.com"]
+    }
+
+    actions = ["s3:PutObject"]
+    resources = [
+      "${aws_s3_bucket.terraform-capstone-s3-logs.arn}/AWSLogs/${data.aws_caller_identity.current.account_id}/*"
+    ]
+
+    condition {
+      test     = "StringEquals"
+      variable = "s3:x-amz-acl"
+      values   = ["bucket-owner-full-control"]
+    }
+  }
+}
+
+resource "aws_s3_bucket_policy" "logs_bucket" {
+  bucket = aws_s3_bucket.terraform-capstone-s3-logs.id
+  policy = data.aws_iam_policy_document.logs_bucket.json
+}
+
 # ============================================================
-# Flow Log IAM role and policy
+# Flow & ALB Logs IAM role and policy
 # ============================================================
-resource "aws_cloudwatch_log_group" "terraform_capstone_flow_log_group" {
-  name              = "terraform-capstone-flow-logs"
+resource "aws_cloudwatch_log_group" "terraform_capstone_traffic_log_group" {
+  name              = "terraform-capstone-traffic-logs"
   retention_in_days = 14
-    tags = {
-    Name = "terraform-capstone-flow-logs"
+  tags = {
+    Name = "terraform-capstone-traffic-logs"
   }
 }
 
@@ -136,12 +166,12 @@ data "aws_iam_policy_document" "assume_role" {
   }
 }
 
-resource "aws_iam_role" "terraform_capstone_flow_log_role" {
-  name               = "terraform-capstone-flow-log-role"
+resource "aws_iam_role" "terraform_capstone_traffic_log_role" {
+  name               = "terraform-capstone-traffic-log-role"
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
-data "aws_iam_policy_document" "terraform_capstone_flow_log_policy" {
+data "aws_iam_policy_document" "terraform_capstone_traffic_log_policy" {
   statement {
     effect = "Allow"
 
@@ -153,13 +183,13 @@ data "aws_iam_policy_document" "terraform_capstone_flow_log_policy" {
       "logs:DescribeLogStreams",
     ]
 
-    resources = ["${aws_cloudwatch_log_group.terraform_capstone_flow_log_group.arn}:*"]
+    resources = ["${aws_cloudwatch_log_group.terraform_capstone_traffic_log_group.arn}:*"]
   }
 }
 
-resource "aws_iam_role_policy" "terraform_capstone_flow_log_policy" {
-  name   = "terraform-capstone-flow-log-policy"
-  role   = aws_iam_role.terraform_capstone_flow_log_role.id
-  policy = data.aws_iam_policy_document.terraform_capstone_flow_log_policy.json
+resource "aws_iam_role_policy" "terraform_capstone_traffic_log_policy" {
+  name   = "terraform-capstone-traffic-log-policy"
+  role   = aws_iam_role.terraform_capstone_traffic_log_role.id
+  policy = data.aws_iam_policy_document.terraform_capstone_traffic_log_policy.json
 }
 

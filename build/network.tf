@@ -6,7 +6,7 @@
 resource "aws_vpc" "Terraform_Web_Vpc" {
   cidr_block = "10.0.0.0/16"
 
-    tags = {
+  tags = {
     Name = "Terraform Web VPC"
   }
 }
@@ -101,7 +101,7 @@ resource "aws_route_table" "RT" {
   vpc_id = aws_vpc.Terraform_Web_Vpc.id
 
   route {
-    cidr_block = "0.0.0.0/0"
+    cidr_block     = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.nat_a.id
   }
 

@@ -39,6 +39,6 @@ resource "aws_wafv2_web_acl" "terraform_capstone_web_acl" {
 }
 
 resource "aws_wafv2_web_acl_association" "terraform_capstone_web_acl_association" {
-  resource_arn = "${aws_lb.Terraform_ALB.arn}"
+  resource_arn = aws_lb.Terraform_ALB.arn
   web_acl_arn  = aws_wafv2_web_acl.terraform_capstone_web_acl.arn
 }

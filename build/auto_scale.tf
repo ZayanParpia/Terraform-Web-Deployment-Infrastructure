@@ -37,8 +37,15 @@ resource "aws_autoscaling_group" "asg" {
   launch_template {
     id      = aws_launch_template.Autoscale-LaunchTemplate.id
     version = "$Latest"
+
+  }
+  tag {
+    key                 = "Name"
+    value               = "capstone-web-server"
+    propagate_at_launch = true
   }
 }
+
 
 
 resource "aws_autoscaling_policy" "autoscale-policy" {
