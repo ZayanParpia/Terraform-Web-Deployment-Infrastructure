@@ -52,9 +52,8 @@ Create ALB Infrastructure and set ips to private ✅
 
 September 16, 2026
 
-Figure out why ALB isn't distributing traffic (Alb Target group attachment \& aws\_autoscaling\_attachment) ✅
+Figure out why ALB isn't distributing traffic (Alb Target group attachment & aws_autoscaling_attachment) ✅
 Figure out why SSM is disabled now ✅
-
 
 
 September 17, 2026
@@ -75,104 +74,53 @@ Remove IGW attachment to subnets ✅
 Make sure s3 is secure and encrypted ✅
 
 
-
 Steps for Sep 21, 2026
-Get ALB to work with ec2 instances again ✅
+Get ALB to work with ec2 instances again 
 
-Configure KMS so that the s3 bucket is encrypted properly. ✅
+Configure KMS so that the s3 bucket is encrypted properly. 
 
-Change s3 type ✅
+Change s3 type
 
-Add Flow Logs ✅
+Add Flow Logs
 
-Add WAF ✅
+Add WAF
 
 Organize what to do post project
 
-Mount s3 beforehand ✅
+Mount s3 beforehand 
 
 
+*Make it usable for the public when done
 
-\*Make it usable for the public when done
+Rename Files and Resources for proper documentation 
 
+Outputs to dont forget that 
 
+When done project organize folders and all for learning and build and all and package in docker
 
-Rename Files and Resources for proper documentation  ✅
+add default_cooldown to autoscale and check if it works
+Edit IAM Permissions for PoLP permissions
 
-Outputs to dont forget that  ✅
+fix diagram for typos and Change Diagram for Private ec2 instances and NAT
 
-Names for ec2 instances  ✅
+Add Monitoring 
 
+CI/CD Pipeline
 
+Typos
 
-fix diagram for typos and Change Diagram for Private ec2 instances and NAT ✅
+Package to docker to 
 
+organize files and folders
 
-
-See if you can get https traffic ✅
-
-
-
-Refine README.md for duplicates and why you cant get https✅
-
-
-
-Block Public Access s3  ✅
-
-
-
-Write Flow and ALB logs to S3 Bucket ✅
-
-
-
-Add Docker and CI to Diagram ✅
-
-
-
-Flow Logs bucket ✅
-
-
-
-Create variables ✅
-
-
-
-Docker ✅
-
-
-
-and ci/cd pipeline
-
-
-
-Create IAM Permissions account for deploying this architecture
-
-
-
-Collect Screenshots/Video demo
-
-
-
-Edit README for screenshot explanations and explain what each tf file does and fix the architecture at a glance
-
-
-
-List things to simulate with the WAF and perhaps az down
-
-
+When done test if AI can make it 
 
 When done create README and Format for that and create comments
-
-
 
 Post on linkedin
 Post on GitHub
 
-
-
-When done test if AI can make it
-
+Simulate some things (list them and do them 25 minutes a day)
 # ============================================================
 
 And create screenshots
-
