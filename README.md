@@ -26,6 +26,8 @@ Behind that flow, the environment adds:
 
 This project combines **cloud engineering + cloud security + Infrastructure-as-Code + DevSecOps** in one environment.
 
+> Note: I did not add HTTPS in this project because I am running it on the AWS free tier and do not have a custom domain or paid hosting setup for a public certificate. In a production environment, HTTPS would normally be enabled with a domain and certificate management.
+
 ---
 
 # 🏗️ What I Built
@@ -141,7 +143,7 @@ Private EC2
 
 ### 4. Least Privilege IAM
 
-IAM roles and policies are used to give users and AWS services only the permissions required for their job.
+The Least Privilege IAM roles and policies are used to give the user the bare minimum of they need to deploy this infasturcture. 
 
 This applies the **Principle of Least Privilege (PoLP)** throughout the environment.
 
@@ -165,10 +167,10 @@ Data at rest is protected using **AWS KMS**.
 Internet
    │
    ▼
- WAF
+  WAF
    │
    ▼
- ALB
+  ALB
    │
    ▼
 Private EC2
@@ -188,7 +190,7 @@ NAT Gateway
 Internet Gateway
     │
     ▼
-Internet
+ Internet
 ```
 
 This lets private instances reach external resources without turning them into public-facing servers.
@@ -204,14 +206,14 @@ Auto Scaling is used to adjust EC2 capacity based on workload.
 I also created **mock CPU usage testing** to demonstrate how increased resource utilization can be used to trigger scaling behavior.
 
 ```text
-Normal workload
-      │
-      ▼
-  EC2 ─── EC2
+    Normal workload
+          │
+          ▼
+     EC2 ─── EC2
 
-Higher workload
-      │
-      ▼
+    Higher workload
+          │
+          ▼
 EC2 ─── EC2 ─── EC2 ─── EC2
 ```
 
@@ -252,7 +254,7 @@ AWS Resources
      └── CloudWatch
              │
              ▼
-            S3
+             S3 
 ```
 
 ---

@@ -137,7 +137,15 @@ Create variables ✅
 
 
 
-Docker ✅
+Remove Compute
+
+
+
+Docker
+
+
+
+Why no https
 
 
 
@@ -164,6 +172,8 @@ List things to simulate with the WAF and perhaps az down
 When done create README and Format for that and create comments
 
 
+
+Change description on portfolio site
 
 Post on linkedin
 Post on GitHub
