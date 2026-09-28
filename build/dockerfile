@@ -1,0 +1,6 @@
+FROM hashicorp/terraform:1.9
+WORKDIR /build
+COPY . .
+RUN terraform init -backend=false
+ENTRYPOINT ["terraform"]
+CMD ["--help"]
