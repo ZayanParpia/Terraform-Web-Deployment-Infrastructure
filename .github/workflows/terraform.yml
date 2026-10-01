@@ -12,6 +12,12 @@ permissions:
 jobs:
   terraform:
     runs-on: ubuntu-latest
+    
+    # 📁 Tells GitHub to run all commands inside the /build directory by default
+    defaults:
+      run:
+        working-directory: ./build
+
     steps:
       - uses: actions/checkout@v4
 
