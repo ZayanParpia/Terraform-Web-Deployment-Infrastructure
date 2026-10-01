@@ -32,7 +32,7 @@ resource "aws_subnet" "Terraform_Web_Subnet_A" {
 resource "aws_subnet" "Terraform_Web_Subnet_B" {
   vpc_id            = aws_vpc.Terraform_Web_Vpc.id
   cidr_block        = "10.0.2.0/24"
-  availability_zone = "var.availability_zones[1]"
+  availability_zone = var.availability_zones[1]
   #map_public_ip_on_launch = "true"
 
   tags = {
@@ -62,7 +62,7 @@ resource "aws_subnet" "ALB-Subnet-B" {
   vpc_id                  = aws_vpc.Terraform_Web_Vpc.id
   cidr_block              = "10.0.5.0/24"
   map_public_ip_on_launch = "true"
-  availability_zone       = "var.availability_zones[1]"
+  availability_zone       = var.availability_zones[1]
 
   tags = {
     Name = "ALB subnet B"
