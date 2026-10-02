@@ -137,23 +137,31 @@ Create variables ✅
 
 
 
+Docker ✅
+
+
+
+Why no https ✅
+
+
+
+Create IAM Permissions account for deploying this architecture ✅
+
+
+
+not allowing me to STS ✅
+
+
+
+fix ci/cd pipeline
+
+
+
 Remove Compute
 
 
 
-Docker
-
-
-
-Why no https
-
-
-
-and ci/cd pipeline
-
-
-
-Create IAM Permissions account for deploying this architecture
+rename resources (no more "tests")
 
 
 
@@ -161,7 +169,7 @@ Collect Screenshots/Video demo
 
 
 
-Edit README for screenshot explanations and explain what each tf file does and fix the architecture at a glance
+Edit README for screenshot explanations and explain what each tf file does and fix the architecture at a glance and how to deploy it
 
 
 
