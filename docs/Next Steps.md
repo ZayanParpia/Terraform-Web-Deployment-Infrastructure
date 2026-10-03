@@ -153,31 +153,61 @@ not allowing me to STS ✅
 
 
 
-fix ci/cd pipeline
+fix ci/cd pipeline ✅
+
+Troubleshooting remote states ✅
 
 
 
-Remove Compute
+fix
+
+│ Error: deleting EC2 Network Interface (eni-09c6a6b33c4a4793c): operation error EC2: DeleteNetworkInterface, https response error StatusCode: 403, RequestID: 403d37ee-72f4-4c46-a966-d53a4f271a4d, api error UnauthorizedOperation: You are not authorized to perform this operation. User: arn:aws:sts::248179617249:assumed-role/GitHubActionsTerraform/GitHubActions is not authorized to perform: ec2:DeleteNetworkInterface on resource: arn:aws:ec2:us-east-1:248179617249:network-interface/eni-09c6a6b33c4a4793c because no identity-based policy allows the ec2:DeleteNetworkInterface action. Encoded authorization failure message: EvpQfcuMV4cvrrQLqL6vf6jiDYt6G2wx-i\_0Ze6h6xQyN4vykEQBxvlT\_2aMPVJwzvTpp\_FEqUr6P5OMWRFgAP-fX1mr5SuW6y07JbnSQZJZqDj1YeTmOhyUJtdl\_vbjoCPHC8B50v-ZTT5SjneZl15z1Jy87Oe63cCqzUhucQPu\_NN9iNVu0-4Gbh1SGqUVJFF\_iQsRbe13Tsd24YjFKdaEMLs3sgo2fwH\_gX1izHyD-G0VTeXgjP77ple8vs\_1X-TY0O\_ZhbBeMigtrWd77G78LEpWM0L-p3kl1cS48ZCuHOIC6Fo0amaEG1gXpUey5kwpnabl5aGStM5yyzCHuVAsXaN7r1kAZh4SlZRjFcnwE ✅
 
 
 
-rename resources (no more "tests")
+
+
+Remove Compute ✅
+
+
+
+
+
+rename resources (no more "tests") ✅
+
+
+
+IAM role on MD ✅
+
+
+
+Edit README for screenshot explanations and explain what each tf file does and how to deploy it ✅
+
+
+
+Change diagram for WAF ✅
 
 
 
 Collect Screenshots/Video demo
 
-
-
-Edit README for screenshot explanations and explain what each tf file does and fix the architecture at a glance and how to deploy it
-
-
-
 List things to simulate with the WAF and perhaps az down
 
 
 
-When done create README and Format for that and create comments
+Check if you even need the compute.tf
+
+
+
+Deploy with Docker
+
+
+
+Create license 
+
+
+
+Edit IAM for PoLP
 
 
 
@@ -185,6 +215,8 @@ Change description on portfolio site
 
 Post on linkedin
 Post on GitHub
+
+
 
 
 

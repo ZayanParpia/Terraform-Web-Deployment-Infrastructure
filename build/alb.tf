@@ -1,7 +1,7 @@
 #ALB
 
 resource "aws_lb" "Terraform_ALB" {
-  name               = "test-lb-tf"
+  name               = "Terraform-Capstone-ALB"
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.Security_Rules.id]
@@ -13,7 +13,7 @@ resource "aws_lb" "Terraform_ALB" {
 
   access_logs {
     bucket  = aws_s3_bucket.terraform-capstone-s3-logs.id
-    prefix  = "test-lb"
+    prefix  = "Terraform-ALB-logs"
     enabled = true
   }
 
@@ -48,7 +48,7 @@ resource "aws_lb_target_group" "target_group" {
 #LISTENER
 
 resource "aws_lb_listener" "http" {
-  load_balancer_arn = aws_lb.Terraform_ALB.arn
+  load_balancer_arn = aws_lb.Terraform-Capstone-ALB.arn
   port              = "80"
   protocol          = "HTTP"
 
