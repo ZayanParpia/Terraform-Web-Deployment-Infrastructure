@@ -191,6 +191,12 @@ Change diagram for WAF ✅
 
 Collect Screenshots/Video demo
 
+
+
+FIx Errors
+
+
+
 List things to simulate with the WAF and perhaps az down
 
 
@@ -203,11 +209,19 @@ Deploy with Docker
 
 
 
-Create license 
+Create license
+
+
+
+Confirm README.md for deployment (Edit What I build and why and remove unnecessary things and add problems i ran into and what I would improve on section and create links that work)
 
 
 
 Edit IAM for PoLP
+
+
+
+Interview Speak on this project practice
 
 
 

@@ -48,7 +48,7 @@ resource "aws_lb_target_group" "target_group" {
 #LISTENER
 
 resource "aws_lb_listener" "http" {
-  load_balancer_arn = aws_lb.Terraform-Capstone-ALB.arn
+  load_balancer_arn = aws_lb.Terraform_ALB.arn
   port              = "80"
   protocol          = "HTTP"
 
