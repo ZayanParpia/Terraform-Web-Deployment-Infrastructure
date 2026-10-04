@@ -189,11 +189,19 @@ Change diagram for WAF ✅
 
 
 
-Collect Screenshots/Video demo
+Collect Screenshots ✅
 
 
 
-FIx Errors
+Edit Screenshot file names and explain them.
+
+
+
+Create Video demo
+
+
+
+Fix name for test-ec2-role
 
 
 
