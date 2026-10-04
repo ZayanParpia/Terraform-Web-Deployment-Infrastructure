@@ -193,7 +193,7 @@ Collect Screenshots ✅
 
 
 
-Edit Screenshot file names and explain them.
+Edit Screenshot file names and explain them. ✅
 
 
 
@@ -218,6 +218,8 @@ Deploy with Docker
 
 
 Remove the test.txt and the states
+
+
 
 Create license
 

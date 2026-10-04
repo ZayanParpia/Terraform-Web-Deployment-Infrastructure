@@ -16,6 +16,12 @@
 
 ![Architecture Diagram](Diagram/Diagram.png)
 
+<p align="left">
+  <a href="Screenshots/Terraform%20Capstone_%20Screenshot%20Explanations.md">
+    <img src="https://img.shields.io/badge/📸_Screenshot_Explanations-Open_Document-5B5BD6?style=for-the-badge" alt="Screenshot Explanations" />
+  </a>
+</p>
+
 I designed and deployed a **secure, highly available web application environment on AWS** using **Terraform** rather than manually building the infrastructure in the AWS Console.
 
 The key idea is simple:
