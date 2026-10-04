@@ -51,6 +51,7 @@ This project combines **cloud engineering + cloud security + Infrastructure-as-C
 - [Monitoring & Logging](#-monitoring--logging)
 - [Infrastructure as Code](#%EF%B8%8F-infrastructure-as-code)
 - [Project File Reference (`/build`)](#-project-file-reference-build)
+- [Screenshot Explanations](Screenshots/Terraform%20Capstone_%20Screenshot%20Explanations.md)
 - [Deployment Instructions](#-deployment-instructions)
 - [CI/CD](#-cicd)
 - [Docker](#-docker)
@@ -813,6 +814,7 @@ The project is documented through:
 
 - Architecture diagrams
 - Terraform code
+- [Screenshot explanations guide](Screenshots/Terraform%20Capstone_%20Screenshot%20Explanations.md)
 - AWS infrastructure screenshots
 - Terraform execution screenshots
 - SSM management screenshots
