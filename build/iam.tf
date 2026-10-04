@@ -98,7 +98,7 @@ data "aws_iam_policy_document" "logs_bucket" {
 
     actions = ["s3:PutObject"]
     resources = [
-      "${aws_s3_bucket.terraform-capstone-s3-logs.arn}/test-lb/AWSLogs/${data.aws_caller_identity.current.account_id}/*"
+      "${aws_s3_bucket.terraform-capstone-s3-logs.arn}/Terraform-ALB-logs/AWSLogs/${data.aws_caller_identity.current.account_id}/*"
     ]
   }
 
