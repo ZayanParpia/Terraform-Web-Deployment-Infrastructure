@@ -228,7 +228,7 @@ Create license
 Confirm README.md for deployment (Edit What I build and why and remove unnecessary things and add problems i ran into and what I would improve on section and create links that work)
 
 * add remote states file to README.md
-* Screenshots explanation deeper for ones that have multiple things 
+* Screenshots explanation deeper for ones that have multiple things
 * 
 
 Edit IAM for PoLP
@@ -247,6 +247,8 @@ Change description on portfolio site
 
 Post on linkedin
 Post on GitHub
+
+
 
 
 
