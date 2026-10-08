@@ -201,11 +201,7 @@ Create Video demo ✅
 
 
 
-Fix name for test-ec2-role
-
-
-
-List things to simulate with the WAF and perhaps az down
+Fix name for test-ec2-role and flow log and target group name ✅
 
 
 
@@ -241,11 +237,19 @@ Delete it
 
 
 
+For Portfolio site, create paragraph description to explain why I choose each part of the infrastructure and what it does
+
 Interview Speak on this project practice
 
 
 
-Change description on portfolio site
+
+
+Change description on portfolio site and GitHub logo
+
+Remove mock
+
+CICD add that
 
 Post on linkedin
 Post on GitHub
