@@ -205,35 +205,24 @@ Fix name for test-ec2-role and flow log and target group name ✅
 
 
 
-Check if you even need the compute.tf
+Check if you even need the compute.tf ✅
 
 
 
-Deploy with Docker
-
-
-
-Remove the test.txt and the states
-
-
-
-Create license
+Create license ✅
 
 
 
 Confirm README.md for deployment (Edit What I build and why and remove unnecessary things and add problems i ran into and what I would improve on section and create links that work)
 
-* add remote states file to README.md
+* add remote states file to README.md 
 * Screenshots explanation deeper for ones that have multiple things
-* 
-
-Edit IAM for PoLP
 
 
 
-Delete it
 
 
+Deploy with Docker/Learn it and make sure it works with it
 
 
 

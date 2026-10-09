@@ -2,5 +2,5 @@ FROM hashicorp/terraform:1.9
 WORKDIR /build
 COPY . .
 RUN terraform init -backend=false
-ENTRYPOINT ["terraform"]
-CMD ["--help"]
+ENTRYPOINT ["/bin/sh", "-lc"]
+CMD ["terraform fmt -recursive && terraform validate && terraform plan && terraform apply -auto-approve"]
