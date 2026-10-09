@@ -352,7 +352,9 @@
 
 &#x09;			"arn:aws:kms:us-east-1:248179617249:alias/terraform\_capstone\_s3\_key",
 
-&#x09;			"arn:aws:kms:us-east-1:248179617249:alias/terraform-capstone-s3-states"
+&#x09;			"arn:aws:kms:us-east-1:248179617249:alias/terraform-capstone-s3-states",
+
+&#x09;			"arn:aws:elasticloadbalancing:us-east-1:248179617249:loadbalancer/app/Terraform-Capstone-ALB/a811d55939b71c5a"
 
 &#x09;		],
 
@@ -428,11 +430,13 @@
 
 &#x09;			"arn:aws:iam::248179617249:role/terraform-capstone-traffic-log-role",
 
-&#x09;			"arn:aws:iam::248179617249:role/test-ec2-role",
-
 &#x09;			"arn:aws:iam::248179617249:instance-profile/EC2-Instance-Profile",
 
-&#x09;			"arn:aws:iam::248179617249:instance-profile/test-ec2-ssm-profile"
+&#x09;			"arn:aws:iam::248179617249:instance-profile/capstone-ec2-instance-profile",
+
+&#x09;			"arn:aws:iam::248179617249:role/capstone-ec2-role",
+
+&#x09;			"arn:aws:iam::248179617249:role/test-ec2-ssm-profile"
 
 &#x09;		]
 
@@ -456,7 +460,7 @@
 
 &#x09;			"arn:aws:iam::\*:role/web-\*",
 
-&#x09;			"arn:aws:iam::248179617249:role/test-ec2-role"
+&#x09;			"arn:aws:iam::248179617249:role/capstone-ec2-role"
 
 &#x09;		],
 
@@ -490,7 +494,7 @@
 
 &#x09;			"arn:aws:iam::\*:role/web-\*",
 
-&#x09;			"arn:aws:iam::248179617249:role/test-ec2-role"
+&#x09;			"arn:aws:iam::248179617249:role/capstone-ec2-role"
 
 &#x09;		],
 
