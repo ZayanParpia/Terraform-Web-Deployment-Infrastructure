@@ -595,6 +595,8 @@ terraform destroy -auto-approve
 
 The project also includes a CI/CD pipeline for automating infrastructure checks and deployment workflow.
 
+After the simulated WAF attack validation is complete, I will extend the pipeline so it not only validates Terraform but also builds and deploys the containerized web application to the EC2 web tier in a repeatable way.
+
 Conceptually:
 
 ```text
@@ -606,21 +608,33 @@ CI/CD
    ├── Format / Validate
    ├── Terraform checks
    ├── Terraform Plan
+   ├── Docker build / image verification
+   ├── Simulated WAF attack validation
    └── Deployment workflow
            │
            ▼
-          AWS
+          AWS EC2 web servers
 ```
 
-This connects the infrastructure work to a real development workflow instead of treating Terraform as a one-time script.
+This connects the infrastructure work to a real development workflow instead of treating Terraform as a one-time script, and it gives the environment a clear path from code change to secure deployment.
 
 ---
 
 ## 🐳 Docker
 
-The application is also packaged using Docker.
+The application will be packaged using Docker so the web server can run consistently on EC2 instances behind the ALB.
 
-The purpose is to keep the application runtime consistent and make deployment easier to reproduce.
+The intended setup is:
+
+- Build a Docker image for the web application using a Dockerfile
+- Expose the required port for the app on the container
+- Store the image in a registry or build it during CI/CD
+- Deploy the containerized app to the EC2 web servers in the private subnet layer
+- Use the ALB to distribute traffic across the running instances
+
+This keeps the runtime consistent, makes deployment easier to reproduce, and allows the app to scale with the same infrastructure pattern used in the rest of the project.
+
+Once the simulated WAF attack testing is complete, I will connect this Docker workflow into the CI/CD pipeline so the web app deployment happens only after security validation has been exercised and confirmed.
 
 ---
 

@@ -4,10 +4,10 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 6.0"
     }
-    docker = {
-      source  = "kreuzwerker/docker"
-      version = "~> 4.2.0"
-    }
+    # docker = {
+    #   source  = "kreuzwerker/docker"
+    #   version = "~> 4.2.0"
+    # }
   }
 }
 
@@ -19,20 +19,20 @@ provider "aws" {
 
 # Configure the Docker Provider
 
-provider "docker" {
-  host = "npipe:////.//pipe//docker_engine"
-}
+# provider "docker" {
+#   host = "npipe:////.//pipe//docker_engine"
+# }
 
-resource "docker_image" "nginx" {
-  name         = "nginx:latest"
-  keep_locally = false
-}
+# resource "docker_image" "nginx" {
+#   name         = "nginx:latest"
+#   keep_locally = false
+# }
 
-resource "docker_container" "nginx" {
-  image = docker_image.nginx.image_id
-  name  = "terraform-capstone-nginx"
-  ports {
-    internal = 80
-    external = 8000
-  }
-}
+# resource "docker_container" "nginx" {
+#   image = docker_image.nginx.image_id
+#   name  = "terraform-capstone-nginx"
+#   ports {
+#     internal = 80
+#     external = 8000
+#   }
+# }
