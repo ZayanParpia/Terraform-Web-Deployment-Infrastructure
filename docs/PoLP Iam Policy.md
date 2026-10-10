@@ -410,8 +410,6 @@
 
 &#x09;			"iam:DeleteInstanceProfile",
 
-&#x09;			"iam:GetInstanceProfile",
-
 &#x09;			"iam:AddRoleToInstanceProfile",
 
 &#x09;			"iam:RemoveRoleFromInstanceProfile",
@@ -436,7 +434,9 @@
 
 &#x09;			"arn:aws:iam::248179617249:role/capstone-ec2-role",
 
-&#x09;			"arn:aws:iam::248179617249:role/test-ec2-ssm-profile"
+&#x09;			"arn:aws:iam::248179617249:role/instance-profile/ec2-ssm-profile",
+
+&#x09;			"arn:aws:iam::248179617249:instance-profile/ec2-ssm-profile"
 
 &#x09;		]
 

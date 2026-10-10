@@ -16,12 +16,6 @@
 
 ![Architecture Diagram](Diagram/Diagram.png)
 
-<p align="left">
-  <a href="Screenshots/Terraform%20Capstone_%20Screenshot%20Explanations.md">
-    <img src="https://img.shields.io/badge/📸_Screenshot_Explanations-Open_Document-5B5BD6?style=for-the-badge" alt="Screenshot Explanations" />
-  </a>
-</p>
-
 I designed and deployed a secure, highly available web application environment on AWS using Terraform rather than manually building the infrastructure in the AWS Console.
 
 The key idea is simple:
@@ -31,7 +25,7 @@ Internet → AWS WAF → ALB → Private EC2 Web Servers
 Behind that flow, the environment adds:
 
 - Multi-AZ deployment for redundancy
-- Auto Scaling for changing workloads
+- Horizontal scaling with Auto Scaling to handle changing workloads without creating a single point of failure for the EC2 layer
 - NAT Gateway for controlled outbound internet access from private EC2 instances
 - SSM Session Manager instead of exposing SSH
 - IAM least privilege for access control
@@ -48,7 +42,6 @@ This project combines cloud engineering + cloud security + Infrastructure-as-Cod
 
 ## 📑 Table of Contents
 
-- [What I Built](#-what-i-built)
 - [Architecture at a Glance](#-architecture-at-a-glance)
 - [Security Design](#-security-design)
 - [Why No HTTPS (and How I'd Add It in Production)](#-why-no-https-and-how-id-add-it-in-production)
@@ -77,7 +70,7 @@ This project combines cloud engineering + cloud security + Infrastructure-as-Cod
 | Private Subnets | Host EC2 web servers | Prevents direct internet exposure |
 | AWS WAF | Filters malicious web requests | Application-layer protection |
 | Application Load Balancer | Receives web traffic and distributes it | Availability + controlled access |
-| EC2 + Auto Scaling | Runs the web application and scales capacity | Resilience + elasticity |
+| EC2 + Auto Scaling | Runs the web application across multiple instances using horizontal scaling so traffic can shift without a single EC2 instance becoming a single point of failure | Resilience + elasticity |
 | NAT Gateway | Gives private EC2 outbound internet access | Internet access without public exposure |
 | SSM Session Manager | Provides administrative access to EC2 | No SSH exposure |
 | IAM | Controls permissions | Least privilege |
@@ -268,13 +261,13 @@ This lets private instances reach external resources without turning them into p
 
 The architecture uses multiple Availability Zones so the application is not dependent on a single EC2 instance, subnet, or AZ.
 
-Auto Scaling is used to adjust EC2 capacity based on workload.
+The environment uses horizontal scaling with Auto Scaling to add or remove EC2 instances based on demand, spreading traffic across multiple nodes so no single EC2 instance becomes a single point of failure.
 
-I also created mock CPU usage testing to demonstrate how increased resource utilization can be used to trigger scaling behavior.
+I also created mock CPU usage testing to demonstrate how increased resource utilization can be used to trigger scaling behavior and increase instance count behind the load balancer.
 
 This gave me hands-on experience with:
 
-Availability Zones → Redundancy → Load Balancing → Auto Scaling
+Availability Zones → Redundancy → Load Balancing → Horizontal Scaling → No Single Point of Failure
 
 ---
 
@@ -535,6 +528,57 @@ When it finishes, Terraform prints the outputs (such as the ALB DNS name). Open 
 
 ---
 
+### Optional Step 6A — Deploy the Docker container locally with Terraform
+
+This project also includes a Docker provider configuration in `build/providers.tf`, which lets Terraform build and run a local Docker container for the application environment.
+
+The updated provider block includes:
+
+```hcl
+provider "docker" {
+  host = "npipe:////.//pipe//docker_engine"
+}
+```
+
+This is designed for a Windows setup where Docker Desktop is running and the Docker Engine pipe is available.
+
+#### Prerequisites
+
+- Docker Desktop installed and running
+- Docker Engine accessible from your local machine
+- Terraform installed
+
+#### Deploy just the Docker resources
+
+From the `/build` folder, target only the Docker resources so you do not have to provision the full AWS environment:
+
+```bash
+cd build
+
+terraform init
+terraform apply -target=docker_image.nginx -target=docker_container.nginx
+```
+
+This will pull the `nginx:latest` image and start a container on port `8000`, which is exposed as:
+
+```text
+http://localhost:8000
+```
+
+#### Validate the container
+
+Open the browser to `http://localhost:8000` and confirm the NGINX page loads.
+
+#### Destroy the Docker deployment
+
+```bash
+terraform destroy -target=docker_container.nginx -target=docker_image.nginx
+```
+
+> If you want to create both the AWS infrastructure and the local Docker container in the same Terraform run, you can run the regular `terraform apply` command instead. The Docker resources are configured as part of the same project and can coexist with the AWS deployment.
+
+---
+
 ### Step 7 — Destroy the infrastructure
 
 When you're finished, tear everything down to avoid ongoing charges:
@@ -734,16 +778,6 @@ The project is documented through:
 - [Video walkthrough](https://github.com/ZayanParpia/Terraform-Web-Deployment-Infrastructure/tree/main/video/VIDEO%20DEMO.mp4)
 
 This video shows the full CI/CD pipeline in action, simulates the auto-scaling behavior using mock CPU usage, and ends by destroying the infrastructure to demonstrate the teardown workflow.
-
----
-
-## 🧰 Technologies
-
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=aws,terraform,docker,github,linux,bash&perline=6" alt="Technologies" />
-</p>
-
-`AWS` · `Terraform` · `EC2` · `VPC` · `ALB` · `WAF` · `Auto Scaling` · `NAT Gateway` · `SSM` · `IAM` · `KMS` · `S3` · `CloudWatch` · `VPC Flow Logs` · `Linux` · `Docker` · `CI/CD` · `GitHub`
 
 ---
 

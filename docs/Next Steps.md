@@ -215,14 +215,55 @@ Create license ✅
 
 Confirm README.md for deployment (Edit What I build and why and remove unnecessary things and add problems i ran into and what I would improve on section and create links that work)
 
-* add remote states file to README.md 
-* Screenshots explanation deeper for ones that have multiple things
+* add remote states file to README.md ✅
+* Screenshots explanation deeper for ones that have multiple things ✅
 
 
 
 
 
-Deploy with Docker/Learn it and make sure it works with it
+* README.md edit so that it talks about horizontal scaling ✅
+
+
+
+* tech stack ✅
+
+
+
+* portfolio diagram ✅
+
+
+
+* What I built button ✅
+
+
+
+
+
+* remove states ✅
+
+
+
+
+
+* Deploy with Docker/Learn it and make sure it works with it ✅
+
+
+
+
+
+* Outline what to do for weekend work ons ✅
+
+
+
+
+
+Post on linkedin
+Post on GitHub
+
+
+
+
 
 
 
@@ -232,16 +273,11 @@ Interview Speak on this project practice
 
 
 
+How yaml files work
 
 
-Change description on portfolio site and GitHub logo
 
-Remove mock
 
-CICD add that
-
-Post on linkedin
-Post on GitHub
 
 
 
