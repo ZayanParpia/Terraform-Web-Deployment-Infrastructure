@@ -26,14 +26,14 @@ Behind that flow, the environment adds:
 
 - Multi-AZ deployment for redundancy
 - Horizontal scaling with Auto Scaling to handle changing workloads without creating a single point of failure for the EC2 layer
-- NAT Gateway for controlled outbound internet access from private EC2 instances
-- SSM Session Manager instead of exposing SSH
+- NAT Gateway as the outbound internet path for private EC2 instances, which have no public IP addresses
+- SSM Session Manager instead of SSH keys or an exposed SSH port
 - IAM least privilege for access control
 - KMS encryption for data at rest
-- Private S3 buckets with Block Public Access
+- Private S3 buckets with Block Public Access, including an application bucket mounted on EC2 at launch for instance-accessible storage
 - VPC Flow Logs + CloudWatch for visibility and monitoring
-- Docker for application packaging
-- CI/CD for repeatable infrastructure workflows
+- Docker as a future packaging and web-testing path for deploying and testing the complete website
+- GitHub Actions CI/CD for Terraform validation, planning, and infrastructure deployment
 - A planned WAF security-testing phase using controlled web attack simulations
 
 This project combines cloud engineering + cloud security + Infrastructure-as-Code + DevSecOps in one environment.
@@ -71,15 +71,15 @@ This project combines cloud engineering + cloud security + Infrastructure-as-Cod
 | AWS WAF | Filters malicious web requests | Application-layer protection |
 | Application Load Balancer | Receives web traffic and distributes it | Availability + controlled access |
 | EC2 + Auto Scaling | Runs the web application across multiple instances using horizontal scaling so traffic can shift without a single EC2 instance becoming a single point of failure | Resilience + elasticity |
-| NAT Gateway | Gives private EC2 outbound internet access | Internet access without public exposure |
-| SSM Session Manager | Provides administrative access to EC2 | No SSH exposure |
+| NAT Gateway | Provides the outbound route for private EC2 instances | No public IPs on EC2; outbound connections use the NAT Gateway's public IP |
+| SSM Session Manager | Provides administrative access to EC2 | IAM-controlled access without SSH keys or an exposed SSH port |
 | IAM | Controls permissions | Least privilege |
 | KMS | Encrypts data at rest | Data protection |
-| S3 | Stores logs/data | Durable storage |
+| S3 | Stores logs and application data; the application bucket is mounted on EC2 at launch | Durable object storage accessible from instances through IAM-controlled permissions |
 | CloudWatch | Monitors resources and metrics | Visibility + operations |
 | VPC Flow Logs | Records network flow information | Network investigation |
-| Docker | Packages the application | Consistent deployment |
-| CI/CD | Automates infrastructure workflow | Repeatability + DevOps |
+| Docker | Planned packaging and testing path for deploying the full website | Consistent, repeatable web application testing |
+| CI/CD | Validates, plans, and applies Terraform infrastructure changes through GitHub Actions | Reviewed, repeatable infrastructure deployments |
 
 ---
 
@@ -132,6 +132,12 @@ Users do not connect directly to EC2.
 
 The ALB is the controlled public entry point, while the EC2 layer stays inside private subnets.
 
+### NAT Gateway and outbound traffic
+
+The EC2 instances run in private subnets without public IP addresses. Their default route points to the NAT Gateway in a public subnet, so instances do not connect directly to the internet. For outbound connections, the NAT Gateway translates the private source address to its Elastic IP; external services see that shared egress IP rather than an individual EC2 private IP. Return traffic is allowed for connections initiated from inside, but the NAT Gateway does not provide a path for unsolicited inbound internet connections to the instances.
+
+The NAT Gateway provides routing and address translation, not fine-grained traffic filtering. Route tables determine the egress path, and security-group egress rules control which connections instances may initiate. Inbound web requests are intended to reach the private instances through the public ALB.
+
 ---
 
 ## 🔐 Security Design
@@ -154,13 +160,13 @@ Future testing will validate the WAF using controlled requests such as:
 
 ### 2. Network Segmentation
 
-EC2 web servers live in private subnets across multiple Availability Zones.
+EC2 web servers live in private subnets across multiple Availability Zones and do not receive public IP addresses. Public application traffic is intended to enter through the ALB; the private subnet route sends outbound internet-bound traffic through the NAT Gateway. This reduces direct exposure while still allowing instances to retrieve external resources when needed.
 
-This limits their exposure and gives the environment redundancy.
+> **Current configuration note:** The Terraform currently attaches the same security group to the ALB and EC2 instances, and that group allows ports 80 and 443 from `0.0.0.0/0`. The private addressing and routing prevent direct public internet access to the instances, but this rule does not enforce an ALB-only source at the security-group layer. To enforce that boundary, use separate security groups and allow EC2 web traffic only from the ALB security group.
 
 ### 3. No SSH Exposure
 
-Instead of opening port 22 for administration, the project uses AWS Systems Manager Session Manager.
+I chose AWS Systems Manager Session Manager instead of SSH. This avoids opening port 22 and removes the need to distribute, rotate, and manage SSH keys. Access can be granted and revoked through IAM identities and policies, making it easier to identify which accounts to investigate during a suspected breach. Session activity can also be reviewed through AWS audit records when the relevant logging is enabled.
 
 ```text
 Administrator
@@ -183,6 +189,10 @@ This applies the Principle of Least Privilege (PoLP) throughout the environment.
 S3 is configured as private storage with Block Public Access enabled.
 
 Data at rest is protected using AWS KMS.
+
+#### S3 mount at instance launch
+
+The EC2 launch template runs a user-data script when each Auto Scaling instance starts. The script installs AWS Mountpoint for S3, creates `/mnt/s3`, and mounts the `terraform-capstone-s3` bucket at that path. The EC2 instance profile supplies IAM permissions to list the bucket and read or write its objects, with the required KMS permissions. The website can use this mount for shared, durable file storage from the EC2 instances. This gives the instance a filesystem-style view of S3 objects; S3 remains object storage rather than a block disk.
 
 ### 6. Network Visibility
 
@@ -368,7 +378,7 @@ Everything needed to deploy the infrastructure lives in the `/build` folder. Eac
 | File | What it does |
 |---|---|
 | `providers.tf` | Declares the AWS provider, region, and required provider versions |
-| `backend.tf` | Configures where Terraform stores its state |
+| `backend.tf` | Configures Terraform's remote S3 state bucket, state-file key, region, and state locking |
 | `variables.tf` | Declares the input variables used across the project |
 | `terraform.tfvars` | Supplies the actual values for those variables (your region, names, CIDR ranges, etc.) |
 | `outputs.tf` | Prints useful values after deployment, such as the ALB DNS name |
@@ -389,6 +399,8 @@ Everything needed to deploy the infrastructure lives in the `/build` folder. Eac
 | `terraform.tfstate.backup` | Automatic backup of the previous state file |
 
 > ⚠️ Never commit `terraform.tfstate`, `terraform.tfstate.backup`, `terraform.tfvars`, or the `.terraform/` folder to a public repository. State files can contain sensitive values unless you are sure they do not contain any, add them to your `.gitignore`.
+
+The `build/backend.tf` configuration stores the shared Terraform state remotely in the `terraform-capstone-s3-states` S3 bucket at `terraform-capstone/terraform.tfstate` and enables S3 lock-file state locking. The bucket must exist before Terraform initializes the backend. GitHub Actions uses this backend during its workflow so each run plans and applies against the same infrastructure state.
 
 ```gitignore
 .terraform/
@@ -528,9 +540,9 @@ When it finishes, Terraform prints the outputs (such as the ALB DNS name). Open 
 
 ---
 
-### Optional Step 6A — Deploy the Docker container locally with Terraform
+### Optional Step 6A — Local Docker example (requires enabling the configuration)
 
-This project also includes a Docker provider configuration in `build/providers.tf`, which lets Terraform build and run a local Docker container for the application environment.
+The Docker provider and example NGINX resources in `build/providers.tf` are currently commented out. Enable them before running the commands below. This is a local container example, not an EC2 deployment or part of the current CI/CD workflow. The NGINX container is only a basic local example; the future goal is to use Docker to test and deploy the complete website.
 
 The updated provider block includes:
 
@@ -593,48 +605,35 @@ terraform destroy -auto-approve
 
 ## 🔄 CI/CD
 
-The project also includes a CI/CD pipeline for automating infrastructure checks and deployment workflow.
+The GitHub Actions workflow in [`.github/workflows/terraform.yml`](.github/workflows/terraform.yml) automates the Terraform infrastructure workflow: it checks proposed infrastructure changes and deploys approved changes to AWS. It uses GitHub's OIDC integration to assume an AWS deployment role rather than storing long-lived AWS access keys in the repository.
 
-After the simulated WAF attack validation is complete, I will extend the pipeline so it not only validates Terraform but also builds and deploys the containerized web application to the EC2 web tier in a repeatable way.
+On pull requests and pushes to `main`, the workflow checks formatting, initializes Terraform using the S3 remote-state backend, validates the configuration, and creates a plan. It applies the configuration automatically only for a push to `main`; pull requests do not apply infrastructure changes. The remote state gives CI/CD a consistent record of the deployed resources, while the plan lets proposed changes be reviewed before deployment.
 
-Conceptually:
+The pipeline's purpose is to make infrastructure changes repeatable: it verifies Terraform changes, shows what AWS resources will change, and applies them to the main environment after a push to `main`. The current workflow handles infrastructure only. It does not yet build or deploy the Docker web application or run WAF attack simulations; deploying and testing the full website with Docker is a future extension.
 
 ```text
-GitHub
-   │
-   ▼
-CI/CD
-   │
-   ├── Format / Validate
-   ├── Terraform checks
-   ├── Terraform Plan
-   ├── Docker build / image verification
-   ├── Simulated WAF attack validation
-   └── Deployment workflow
-           │
-           ▼
-          AWS EC2 web servers
+Pull request or push to main
+     │
+     ▼
+   GitHub Actions
+     │ OIDC role assumption
+     ▼
+ Terraform fmt / init / validate / plan
+     │
+  push to main only
+     ▼
+   Terraform apply
 ```
 
-This connects the infrastructure work to a real development workflow instead of treating Terraform as a one-time script, and it gives the environment a clear path from code change to secure deployment.
+This gives infrastructure changes a repeatable path from code review to deployment, with AWS access delegated to a specific IAM role.
 
 ---
 
 ## 🐳 Docker
 
-The application will be packaged using Docker so the web server can run consistently on EC2 instances behind the ALB.
+Docker is planned as the way to package the complete website for future web testing and deployment. Building the site into a container image will make its runtime repeatable in local tests and, as the deployment is extended, on the EC2 web tier. That will provide a realistic target for validating the complete website along with ALB routing, scaling behavior, and WAF rules.
 
-The intended setup is:
-
-- Build a Docker image for the web application using a Dockerfile
-- Expose the required port for the app on the container
-- Store the image in a registry or build it during CI/CD
-- Deploy the containerized app to the EC2 web servers in the private subnet layer
-- Use the ALB to distribute traffic across the running instances
-
-This keeps the runtime consistent, makes deployment easier to reproduce, and allows the app to scale with the same infrastructure pattern used in the rest of the project.
-
-Once the simulated WAF attack testing is complete, I will connect this Docker workflow into the CI/CD pipeline so the web app deployment happens only after security validation has been exercised and confirmed.
+The current EC2 launch template installs Apache and serves a basic page; it does not build or run a Docker image. The Docker provider example is commented out, and Docker image builds, application deployment, and container-based tests are not yet part of CI/CD. These are planned next steps rather than completed capabilities.
 
 ---
 
