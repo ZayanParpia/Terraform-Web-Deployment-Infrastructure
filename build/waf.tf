@@ -9,14 +9,8 @@ resource "aws_wafv2_web_acl" "terraform_capstone_web_acl" {
     allow {}
   }
 
-  visibility_config {
-    cloudwatch_metrics_enabled = true
-    metric_name                = "basicWebACLMetric"
-    sampled_requests_enabled   = true
-  }
-
   rule {
-    name     = "RateLimitRule"
+    name     = "rate-limit-per-ip"
     priority = 1
 
     action {
@@ -25,16 +19,23 @@ resource "aws_wafv2_web_acl" "terraform_capstone_web_acl" {
 
     statement {
       rate_based_statement {
-        limit              = 2000
+        limit              = 100
         aggregate_key_type = "IP"
+        evaluation_window_sec = 30
       }
     }
 
     visibility_config {
       cloudwatch_metrics_enabled = true
-      metric_name                = "RateLimitRuleMetric"
+      metric_name                = "rate-limit-per-ip"
       sampled_requests_enabled   = true
     }
+  }
+
+  visibility_config {
+    cloudwatch_metrics_enabled = true
+    metric_name                = "terraform-capstone-web-acl"
+    sampled_requests_enabled   = true
   }
 }
 
