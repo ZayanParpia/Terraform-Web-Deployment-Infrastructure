@@ -56,5 +56,5 @@ resource "aws_cloudwatch_log_group" "capstone-waf-cloudwatch-group" {
 
 resource "aws_wafv2_web_acl_logging_configuration" "cloudwatch-log-conf" {
   log_destination_configs = [aws_cloudwatch_log_group.capstone-waf-cloudwatch-group.arn]
-  resource_arn            = aws_wafv2_web_acl.terraform_capstone_web_acl.arn 
+  resource_arn            = aws_wafv2_web_acl.terraform_capstone_web_acl.arn
 }
