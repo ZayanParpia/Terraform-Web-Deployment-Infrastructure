@@ -1,4 +1,3 @@
-import time
 import requests
 
 url = input("LINK: ").strip()

@@ -43,3 +43,18 @@ resource "aws_wafv2_web_acl_association" "terraform_capstone_web_acl_association
   resource_arn = aws_lb.Terraform_ALB.arn
   web_acl_arn  = aws_wafv2_web_acl.terraform_capstone_web_acl.arn
 }
+
+#CLOUDWATCH CONF
+resource "aws_cloudwatch_log_group" "capstone-waf-cloudwatch-group" {
+  name = "aws-waf-logs-capstone"
+
+  tags = {
+    Environment = "production"
+    Application = "serviceA"
+  }
+}
+
+resource "aws_wafv2_web_acl_logging_configuration" "cloudwatch-log-conf" {
+  log_destination_configs = [aws_cloudwatch_log_group.capstone-waf-cloudwatch-group.arn]
+  resource_arn            = aws_wafv2_web_acl.terraform_capstone_web_acl.arn 
+}
