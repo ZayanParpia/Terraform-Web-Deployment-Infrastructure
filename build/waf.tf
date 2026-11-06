@@ -54,7 +54,51 @@ resource "aws_cloudwatch_log_group" "capstone-waf-cloudwatch-group" {
   }
 }
 
+data "aws_iam_policy_document" "waf_log_delivery" {
+  statement {
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["delivery.logs.amazonaws.com"]
+    }
+
+    actions = [
+      "logs:CreateLogStream",
+      "logs:PutLogEvents",
+    ]
+
+    resources = [
+      "${aws_cloudwatch_log_group.capstone-waf-cloudwatch-group.arn}:*"
+    ]
+
+    condition {
+      test     = "StringEquals"
+      variable = "aws:SourceAccount"
+      values   = [data.aws_caller_identity.current.account_id]
+    }
+
+    condition {
+      test     = "ArnLike"
+      variable = "aws:SourceArn"
+      values   = [aws_wafv2_web_acl.terraform_capstone_web_acl.arn]
+    }
+  }
+}
+
+resource "aws_cloudwatch_log_resource_policy" "waf_log_delivery" {
+  policy_name     = "aws-waf-logs-delivery-policy"
+  policy_document = data.aws_iam_policy_document.waf_log_delivery.json
+}
+
 resource "aws_wafv2_web_acl_logging_configuration" "cloudwatch-log-conf" {
-  log_destination_configs = [aws_cloudwatch_log_group.capstone-waf-cloudwatch-group.arn]
-  resource_arn            = aws_wafv2_web_acl.terraform_capstone_web_acl.arn
+  log_destination_configs = [
+    aws_cloudwatch_log_group.capstone-waf-cloudwatch-group.arn
+  ]
+
+  resource_arn = aws_wafv2_web_acl.terraform_capstone_web_acl.arn
+
+  depends_on = [
+    aws_cloudwatch_log_resource_policy.waf_log_delivery
+  ]
 }
